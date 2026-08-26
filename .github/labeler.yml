@@ -1,0 +1,48 @@
+"area: model":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "train.py"
+          - "predict.py"
+          - "src/model/**"
+
+"area: preprocessing":
+  - changed-files:
+      - any-glob-to-any-file: "src/preprocessing/**"
+
+"area: visualization":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "plot.py"
+          - "src/visualization/**"
+
+"area: defense":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "docs/PEER_EVALUATION_GUIDE.md"
+          - "docs/MATHEMATICS.md"
+
+"type: test":
+  - changed-files:
+      - any-glob-to-any-file: "tests/**"
+
+"type: docs":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "README.md"
+          - "docs/**"
+          - "SECURITY.md"
+          - "CONTRIBUTING.md"
+          - ".agents/**"
+
+"type: ci":
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+          - "Makefile"
+          - "scripts/**"
+          - "pyproject.toml"
+          - ".pre-commit-config.yaml"
+
+"type: dataset":
+  - changed-files:
+      - any-glob-to-any-file: "dataset/**"
