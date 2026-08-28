@@ -1,0 +1,41 @@
+name: 🎯 Nova Task / Proposta de Melhoria
+description: Propor uma nova tarefa, refatoração ou etapa de implementação.
+title: "[TASK]: "
+labels: ["type: implementation", "priority: medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Defina a nova tarefa com objetivo pedagógico, contexto técnico e critérios de aceite.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: 🎯 Objetivo Pedagógico / Técnico
+      description: O que esta task pretende resolver ou ensinar?
+      placeholder: Implementar o módulo X para atender ao requisito Y do subject...
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: 📝 Checklist de Implementação
+      description: Passo a passo técnico do que será construído.
+      placeholder: |
+        - [ ] Criar classe X em src/...
+        - [ ] Implementar testes unitários em tests/unit/...
+        - [ ] Adicionar comando no Makefile
+    validations:
+      required: true
+
+  - type: textarea
+    id: dod
+    attributes:
+      label: 🧪 Critérios de Aceite (Definition of Done)
+      description: Condições necessárias para dar a task como concluída.
+      placeholder: |
+        - make test passa com 100% de sucesso.
+        - make norm valida a conformidade da 42.
+    validations:
+      required: true

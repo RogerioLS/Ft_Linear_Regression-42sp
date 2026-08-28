@@ -1,0 +1,24 @@
+changelog:
+  categories:
+    - title: "✨ Features & Algoritmos"
+      labels:
+        - "type: implementation"
+        - "area: model"
+        - "feat"
+    - title: "📈 Visualizações & Métricas"
+      labels:
+        - "area: visualization"
+        - "type: bonus"
+    - title: "🛡️ Normas, Testes & Qualidade"
+      labels:
+        - "type: test"
+        - "type: defense"
+        - "area: devops"
+    - title: "📚 Documentação & Teoria"
+      labels:
+        - "type: docs"
+        - "type: math-heavy"
+    - title: "🐛 Correções de Bugs"
+      labels:
+        - "type: bug"
+        - "fix"

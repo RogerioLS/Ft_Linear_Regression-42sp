@@ -1,0 +1,26 @@
+name: 📐 Discussão Matemática & Algoritmo
+description: Debater uma derivação matemática, função de perda ou convergência.
+title: "[MATH]: "
+labels: ["type: math-heavy", "priority: medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Espaço dedicado ao aprofundamento teórico, derivação de fórmulas e esclarecimento de conceitos matemáticos entre a dupla.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: 📚 Conceito ou Fórmulas em Discussão
+      description: Apresente as equações e o ponto de reflexão.
+      placeholder: Dúvida sobre a regra da cadeia na derivada de theta_1...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposals
+    attributes:
+      label: 💡 Hipóteses / Propostas da Dupla
+      description: Quais abordagens foram levantadas?
+    validations:
+      required: true

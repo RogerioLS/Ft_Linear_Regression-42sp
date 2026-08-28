@@ -1,0 +1,48 @@
+name: 🐛 Reporte de Bug / Erro de Execução
+description: Relatar um erro ou comportamento inesperado no código ou nos testes.
+title: "[BUG]: "
+labels: ["type: bug", "priority: medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por relatar o problema! Por favor, forneça as informações abaixo para facilitar a reprodução e correção.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📝 Descrição do Bug
+      description: Explique o que aconteceu de forma clara e concisa.
+      placeholder: Ao executar o comando X, obtive o erro Y...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 🔄 Passos para Reproduzir
+      description: Quais comandos foram executados?
+      placeholder: |
+        1. make install
+        2. python3 train.py dataset/data.csv
+        3. python3 predict.py
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 📜 Logs de Erro / Traceback
+      description: Cole a saída do terminal ou mensagem de erro.
+      render: shell
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: ⚠️ Severidade / Impacto
+      options:
+        - "🔴 Bloqueante (Impede a execução do pipeline ou entrega)"
+        - "🟡 Médio (Funcionalidade secundária com falha)"
+        - "🟢 Baixo (Aviso de linter, melhoria cosmética)"
+    validations:
+      required: true
