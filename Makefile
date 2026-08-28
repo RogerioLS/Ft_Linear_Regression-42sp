@@ -91,6 +91,12 @@ check:
 	@pre-commit run --all-files
 	@printf "$(GREEN)✔ All pre-commit & norm checks passed! Ready for git commit.$(RESET)\n\n"
 
+sync-tasks:
+	@printf "$(BOLD)$(CYAN)🔄 [SYNC] Synchronizing GitHub issues to local task files...$(RESET)\n"
+	@$(PYTHON) scripts/sync_tasks.py
+	@printf "$(GREEN)✔ Tasks successfully synchronized!$(RESET)\n"
+
+
 
 pre-commit:
 	@if command -v pre-commit > /dev/null 2>&1; then \
