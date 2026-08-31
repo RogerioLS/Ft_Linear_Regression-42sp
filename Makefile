@@ -39,7 +39,7 @@ help:
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make pre-commit$(RESET) $(DIM)─$(RESET) Install pre-commit tool and set up git hooks              $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make clean$(RESET)      $(DIM)─$(RESET) Remove temporary cache and prediction files               $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)├──────────────────────────────────────────────────────────────────────────────┤\n$(RESET)"
-	@printf "$(CYAN)│$(RESET)           $(BOLD)$(WHITE)🔥 Crafted with • by $(YELLOW)@RogerioLS$(WHITE) $(DIM)•$(RESET) $(BOLD)$(CYAN)42 São Paulo 🇧🇷$(RESET)                  $(CYAN)│\n$(RESET)"
+	@printf "$(CYAN)│$(RESET)           $(BOLD)$(WHITE)    🔥 Crafted with • by $(YELLOW)@RogerioLS$(WHITE) $(DIM)•$(RESET) $(BOLD)$(CYAN)42 São Paulo 🇧🇷$(RESET)              $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)└──────────────────────────────────────────────────────────────────────────────┘\n$(RESET)"
 
 install:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# 42 FT_LINEAR_REGRESSION — DYNAMIC TASK & CONVENTIONAL COMMIT LINTER HOOK
+#   42 FT_LINEAR_REGRESSION — DYNAMIC TASK & CONVENTIONAL COMMIT LINTER HOOK
 # ==============================================================================
 
 COMMIT_MSG_FILE="$1"
@@ -11,8 +11,8 @@ if [[ "$COMMIT_MSG" =~ ^Merge ]] || [[ "$COMMIT_MSG" =~ ^Revert ]] || [[ "$COMMI
     exit 0
 fi
 
-# Regex: <type>(<scope>): [<TAG>] <description>
-COMMIT_REGEX="^([[:alnum:][:punct:][:space:]]* )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\/-]+\))?:[[:space:]]+(\[([a-zA-Z0-9_-]+)\])?[[:space:]]+(.+)$"
+# Regex: <type>(<scope>): [<TASK-ID>:#<ISSUE_NUM>] <description> or standard conventional commit
+COMMIT_REGEX="^([^:]* )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\/-]+\))?:[[:space:]]+(\[([a-zA-Z0-9_:#-]+)\])?[[:space:]]+(.+)$"
 
 if ! [[ "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
     echo ""
@@ -22,12 +22,13 @@ if ! [[ "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
     echo " ❌ Sua mensagem: \"$COMMIT_MSG\""
     echo ""
     echo " 📐 Formato Obrigatório:"
-    echo "    <type>(<scope>): [<TASK-ID>] <descrição da alteração>"
+    echo "    <type>(<scope>): [<TASK-ID>:#<ISSUE_NUM>] <descrição da alteração>"
+    echo "    ou: <type>(<scope>): [<TASK-ID>] <descrição da alteração>"
     echo ""
     echo " 📌 Exemplos Válidos:"
-    echo "    feat(preprocessing): [LR-01] implement minmax scaler from scratch"
-    echo "    feat(model): [LR-02] implement gradient descent optimization"
-    echo "    docs(theory): [LR-06] derive gradient and loss functions"
+    echo "    feat(preprocessing): [LR-01:#1] implement minmax scaler from scratch"
+    echo "    feat(model): [LR-02:#2] implement gradient descent optimization"
+    echo "    docs(theory): [LR-06:#6] derive gradient and loss functions"
     echo "    chore(build): [INFRA] configure pre-commit and ast norm checker"
     echo ""
     echo " 💡 Tipos Válidos:"
@@ -36,20 +37,24 @@ if ! [[ "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
     exit 1
 fi
 
-# Extract the Task Tag inside brackets [TAG]
-TASK_TAG="${BASH_REMATCH[5]}"
+# Extract the Raw Task Tag inside brackets [TAG] (e.g. LR-01:#1 or LR-01)
+RAW_TASK_TAG="${BASH_REMATCH[5]}"
+TASK_TAG=$(echo "$RAW_TASK_TAG" | cut -d':' -f1)
 
+# Reserved global tags that don't need a matching file in .github/issues/
 RESERVED_TAGS=("INFRA" "CHORE" "DOCS" "FIX" "HOTFIX" "GLOBAL" "CONFIG" "SECURITY" "COMMUNITY" "DEPS")
 
 if [ -n "$TASK_TAG" ]; then
     UPPER_TAG=$(echo "$TASK_TAG" | tr '[:lower:]' '[:upper:]')
 
+    # Check if it's a reserved tag
     for reserved in "${RESERVED_TAGS[@]}"; do
         if [ "$UPPER_TAG" == "$reserved" ]; then
             exit 0
         fi
     done
 
+    # Dynamic validation: Check if task exists in .github/issues/
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     ISSUES_DIR="$SCRIPT_DIR/../.github/issues"
 
