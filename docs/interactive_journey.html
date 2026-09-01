@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>42 ft_linear_regression — Trilha Didática & Masterclass Cronológica</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+
+  <!-- KaTeX for Beautiful LaTeX Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    code, pre { font-family: 'Fira Code', monospace; }
+    .chalk-font { font-family: 'Caveat', cursive; }
+    .chalkboard {
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9), 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white pb-24">
+
+  <!-- TOP HEADER & MULTI-ROW RESPONSIVE GRID NAVIGATION -->
+  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur sticky top-0 z-50 shadow-xl">
+    <div class="max-w-7xl mx-auto px-6 py-3.5 space-y-3">
+
+      <!-- HEADER TITLE BAR -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30 text-sm">
+            42
+          </div>
+          <div>
+            <h1 class="text-base font-bold tracking-tight text-white flex items-center gap-2">
+              ft_linear_regression <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Jornada Cronológica 100% Completa</span>
+            </h1>
+            <p class="text-[11px] text-slate-400">Trilha Completa: Teoria, Provas Matemáticas, Lousa, Simulador, Desnormalização, Bônus & Defesa 42</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MULTI-ROW GRID NAVIGATION -->
+      <nav class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-2 pt-2 border-t border-slate-800/80 text-xs">
+        <a href="#dicionario" class="px-2.5 py-2 rounded-xl font-medium text-indigo-300 bg-indigo-950/50 border border-indigo-500/30 hover:bg-indigo-900/60 transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">📖 0. Dicionário</span>
+          <span class="text-[10px] text-slate-400">Fundamentos</span>
+        </a>
+        <a href="#modulo-1" class="px-2.5 py-2 rounded-xl font-medium text-slate-300 bg-slate-950 border border-slate-800 hover:bg-slate-800 hover:text-white transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">🚗 1. O Problema</span>
+          <span class="text-[10px] text-slate-400">24 Carros</span>
+        </a>
+        <a href="#modulo-2" class="px-2.5 py-2 rounded-xl font-medium text-amber-300 bg-amber-950/30 border border-amber-500/30 hover:bg-amber-900/50 transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">⚖️ 2. Normalização</span>
+          <span class="text-[10px] text-slate-400">Min-Max [0,1]</span>
+        </a>
+        <a href="#modulo-3" class="px-2.5 py-2 rounded-xl font-medium text-purple-300 bg-purple-950/40 border border-purple-500/30 hover:bg-purple-900/50 transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">📐 3. Gradiente</span>
+          <span class="text-[10px] text-slate-400">Regra da Cadeia</span>
+        </a>
+        <a href="#modulo-4" class="px-2.5 py-2 rounded-xl font-medium text-emerald-300 bg-emerald-950/50 border border-emerald-500/40 hover:bg-emerald-900/60 transition text-center flex flex-col items-center justify-center gap-0.5 shadow-sm shadow-emerald-950/50">
+          <span class="text-xs">👨‍🏫 4. Lousa</span>
+          <span class="text-[10px] text-slate-400">Épocas 1 & 2</span>
+        </a>
+        <a href="#modulo-5" class="px-2.5 py-2 rounded-xl font-medium text-pink-300 bg-pink-950/30 border border-pink-500/30 hover:bg-pink-900/50 transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">🕹️ 5. Simulador</span>
+          <span class="text-[10px] text-slate-400">Live GD Canvas</span>
+        </a>
+        <a href="#modulo-6" class="px-2.5 py-2 rounded-xl font-medium text-teal-300 bg-teal-950/30 border border-teal-500/30 hover:bg-teal-900/50 transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">🌉 6. Desnorm.</span>
+          <span class="text-[10px] text-slate-400">θ_norm ➔ θ_real</span>
+        </a>
+        <a href="#modulo-7" class="px-2.5 py-2 rounded-xl font-medium text-cyan-300 bg-cyan-950/40 border border-cyan-500/40 hover:bg-cyan-900/60 transition text-center flex flex-col items-center justify-center gap-0.5 shadow-sm shadow-cyan-950/50">
+          <span class="text-xs">⭐ 7. Bônus</span>
+          <span class="text-[10px] text-slate-400">R², RMSE, Loss</span>
+        </a>
+        <a href="#modulo-8" class="px-2.5 py-2 rounded-xl font-medium text-slate-300 bg-slate-950 border border-slate-800 hover:bg-slate-800 hover:text-white transition text-center flex flex-col items-center justify-center gap-0.5">
+          <span class="text-xs">🎓 8. Defesa 42</span>
+          <span class="text-[10px] text-slate-400">Q&A Avaliação</span>
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-6 py-10 space-y-20">
+
+    <!-- HERO BANNER -->
+    <section class="rounded-3xl bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-slate-900 border border-indigo-500/20 p-8 md:p-12 relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold">
+          🎓 Trilha de Aprendizado Cronológica e Estruturada
+        </div>
+        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          Masterclass de Regressão Linear: Do Zero à Defesa Presencial.
+        </h2>
+        <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+          Cada módulo desta trilha segue uma estrutura rigorosa: <strong>(1) O que é pedido</strong>, <strong>(2) A base matemática formal</strong> e <strong>(3) A aplicação prática destrinchada linha por linha</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- SEÇÃO 0: DICIONÁRIO DE SÍMBOLOS -->
+    <!-- ==================================================================== -->
+    <section id="dicionario" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider">Fundamentos</span>
+          <span class="text-xs text-slate-500">Nivelamento Prévio</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">📖 Dicionário de Símbolos: Traduzindo a Matemática para Português</h3>
+        <p class="text-xs text-slate-400 mt-1">Antes de começarmos os módulos, veja o que cada símbolo grego significa com analogias simples do dia a dia.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- CARD THETA 0 -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-indigo-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-indigo-400 font-mono">$\theta_0$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Theta Zero</span>
+          </div>
+          <h4 class="text-white font-bold text-base">O Intercepto (Ponto de Partida)</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            É onde a reta corta o eixo vertical ($y$). Representa <strong>o preço teórico de um carro 0 km</strong> (quilometragem $x = 0$).
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> O preço de tabela do carro novo na concessionária.
+          </div>
+        </div>
+
+        <!-- CARD THETA 1 -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-purple-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-purple-400 font-mono">$\theta_1$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">Theta Um</span>
+          </div>
+          <h4 class="text-white font-bold text-base">A Inclinação (Taxa de Variação)</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Mede a inclinação da reta: <strong>quantos dólares o carro perde para cada 1 km que ele roda</strong>. Como desvaloriza, esse valor é negativo!
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> A desvalorização por km ($\approx -\$0.021/\text{km}$).
+          </div>
+        </div>
+
+        <!-- CARD Y-HAT -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-pink-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-pink-400 font-mono">$\hat{y}$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-pink-500/10 text-pink-300 border border-pink-500/20">Y-Chapéu / Y-Hat</span>
+          </div>
+          <h4 class="text-white font-bold text-base">A Predição (Chute do Modelo)</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            O $y$ normal é o preço real que estava na tabela. O $\hat{y}$ (com chapéu) é o <strong>preço estimado</strong> calculado pela nossa reta: $\hat{y} = \theta_0 + \theta_1 \cdot x$.
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> A estimativa de preço calculada pelo seu algoritmo.
+          </div>
+        </div>
+
+        <!-- CARD RESIDUAL -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-red-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-xl font-bold text-red-400 font-mono">$(\hat{y} - y)$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-red-500/10 text-red-300 border border-red-500/20">Resíduo / Erro</span>
+          </div>
+          <h4 class="text-white font-bold text-base">O Erro de Predição</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            A distância vertical entre o que o modelo chutou ($\hat{y}$) e o preço real vendido ($y$).
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> A distância entre a régua e o ponto no papel milimetrado.
+          </div>
+        </div>
+
+        <!-- CARD J(THETA) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-amber-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-amber-400 font-mono">$J(\theta)$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">Custo Total (MSE)</span>
+          </div>
+          <h4 class="text-white font-bold text-base">A Nota de Prejuízo do Modelo</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            A média dos erros ao quadrado de todos os carros. O objetivo do treino é empurrar esse número para o menor valor possível.
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> O placar de penalidade. Zero = perfeição absoluta.
+          </div>
+        </div>
+
+        <!-- CARD ALPHA -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3 hover:border-emerald-500/40 transition">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-bold text-emerald-400 font-mono">$\alpha$</span>
+            <span class="text-xs font-semibold px-2 py-1 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Alpha / Learning Rate</span>
+          </div>
+          <h4 class="text-white font-bold text-base">A Taxa de Aprendizado</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            O tamanho do ajuste dado a cada rodada. Controla a velocidade de descida da montanha de erro.
+          </p>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 text-[11px] text-slate-400">
+            💡 <em>Analogia:</em> O tamanho do passo na caminhada.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 01: O PROBLEMA DO MUNDO REAL & A HIPÓTESE LINEAR -->
+    <!-- ==================================================================== -->
+    <section id="modulo-1" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider">Módulo 01</span>
+          <span class="text-xs text-slate-500">Compreendendo o Objetivo</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">O Problema do Mundo Real: Preço vs. Quilometragem</h3>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- TEORIA & PROBLEMA -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <!-- BLOCO 1: O QUE É PEDIDO -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+            <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-2">
+              <span>🎯</span> 1. O que é Pedido
+            </h4>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              Você tem uma base histórica com <strong>24 carros reais</strong> vendidos no mercado (<code class="text-indigo-300">dataset/data.csv</code>). Cada registro contém apenas duas colunas:
+            </p>
+            <ul class="space-y-1.5 list-disc list-inside text-xs text-slate-300 pl-2">
+              <li><strong class="text-indigo-300">Variável Independente ($x$)</strong>: Quilometragem rodada ($\text{km}$).</li>
+              <li><strong class="text-purple-300">Variável Dependente ($y$)</strong>: Preço real de venda do veículo ($\$$).</li>
+            </ul>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              O objetivo do projeto é construir um modelo que aprenda a relação matemática entre essas duas grandezas para prever o preço de qualquer quilometragem futura digitada pelo usuário.
+            </p>
+          </div>
+
+          <!-- BLOCO 2: BASE MATEMÁTICA -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+            <h4 class="text-sm font-bold text-purple-400 uppercase tracking-wide flex items-center gap-2">
+              <span>📐</span> 2. Base Matemática: A Hipótese Linear
+            </h4>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              Modelamos a relação como uma reta no plano bidimensional:
+            </p>
+            <div class="bg-slate-950 p-3 rounded-xl border border-indigo-500/30 text-center font-mono text-base text-indigo-200">
+              $$\hat{y} = \theta_0 + \theta_1 \cdot x$$
+            </div>
+            <p class="text-slate-400 text-xs leading-relaxed">
+              Onde $\theta_0$ é o intercepto vertical e $\theta_1$ é o coeficiente angular. Nosso desafio é encontrar o par $(\theta_0, \theta_1)$ que minimize a distância vertical entre a reta e todos os 24 pontos simultaneamente.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- VISUALIZAÇÃO PRÁTICA -->
+        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              3. Visualização Prática do Dataset
+            </h4>
+            <span class="text-xs text-slate-400 font-mono">24 Automóveis</span>
+          </div>
+
+          <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800/80">
+            <canvas id="datasetCanvas" width="500" height="300" class="w-full h-auto block"></canvas>
+          </div>
+          <p class="text-xs text-slate-400 text-center">
+            Cada ponto azul representa um carro real do arquivo CSV.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 02: NORMALIZAÇÃO DE FEATURES (MIN-MAX SCALING) -->
+    <!-- ==================================================================== -->
+    <section id="modulo-2" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider">Módulo 02</span>
+          <span class="text-xs text-slate-500">Estabilidade Numérica</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">Normalização de Features: Min-Max Scaling $[0.0, 1.0]$</h3>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- BLOCO 1: O DESAFIO DO OVERFLOW -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <h4 class="text-sm font-bold text-amber-400 uppercase tracking-wide flex items-center gap-2">
+            <span>🎯</span> 1. O que é Pedido & O Desafio do Overflow Numérico
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            No dataset, a quilometragem atinge até $240.000\text{ km}$, enquanto os preços estão na casa de $\$6.000$.
+            Quando calculamos o gradiente de $\theta_1$, a fórmula multiplica o erro pelo $x$: $(\hat{y} - y) \cdot x$.
+            Se o erro for de $-4.000$, a conta resulta em $-4.000 \times 240.000 = \mathbf{-960.000.000}$! Sem normalização, o algoritmo dá saltos astronômicos e explode para $\text{NaN}$ em 3 épocas.
+          </p>
+        </div>
+
+        <!-- BLOCO 2: BASE MATEMÁTICA FORMAL -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-2">
+            <span>📐</span> 2. Base Matemática: A Equação Min-Max
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Seja $\Delta x = x_{max} - x_{min}$ a amplitude total dos dados. Mapeamos qualquer valor $x$ linearmente para o intervalo fechado $[0.0, 1.0]$:
+          </p>
+
+          <div class="bg-slate-950 p-4 rounded-xl border border-indigo-500/30 font-mono text-xs text-center space-y-3">
+            $$x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}} = \frac{x - x_{min}}{\Delta x}$$
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left pt-2 font-sans">
+              <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                <span class="text-indigo-300 font-bold font-mono">Limite Inferior ($x = x_{min}$):</span>
+                <p class="font-mono text-slate-300 mt-1">$$x_{norm} = \frac{x_{min} - x_{min}}{\Delta x} = \frac{0}{\Delta x} = \mathbf{0.0}$$</p>
+              </div>
+              <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                <span class="text-indigo-300 font-bold font-mono">Limite Superior ($x = x_{max}$):</span>
+                <p class="font-mono text-slate-300 mt-1">$$x_{norm} = \frac{x_{max} - x_{min}}{x_{max} - x_{min}} = \frac{\Delta x}{\Delta x} = \mathbf{1.0}$$</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 3: DESTRINCHANDO NA PRÁTICA COM NÚMEROS DO DATASET -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
+            <span>🔢</span> 3. Destrinchando na Prática com os Dados do Dataset
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-mono">
+            <div class="bg-slate-950 p-5 rounded-xl border border-indigo-500/30 space-y-2">
+              <span class="text-indigo-400 font-bold font-sans text-sm block">1. Eixo X (Quilometragem):</span>
+              <p class="text-slate-300">$x_{min} = 22.899\text{ km}$ | $x_{max} = 240.000\text{ km}$</p>
+              <p class="text-slate-400">$\Delta x = 240.000 - 22.899 = \mathbf{217.101\text{ km}}$</p>
+              <div class="pt-2 border-t border-slate-800 text-slate-200">
+                <span class="text-indigo-300 font-sans block mb-1">Carro de $100.000\text{ km}$ normalizado:</span>
+                $$x_{norm} = \frac{100.000 - 22.899}{217.101} = \frac{77.101}{217.101} = \mathbf{0.35513}$$
+              </div>
+            </div>
+
+            <div class="bg-slate-950 p-5 rounded-xl border border-purple-500/30 space-y-2">
+              <span class="text-purple-400 font-bold font-sans text-sm block">2. Eixo Y (Preço de Venda):</span>
+              <p class="text-slate-300">$y_{min} = \$3.650$ | $y_{max} = \$8.290$</p>
+              <p class="text-slate-400">$\Delta y = 8.290 - 3.650 = \mathbf{\$4.640}$</p>
+              <div class="pt-2 border-t border-slate-800 text-slate-200">
+                <span class="text-purple-300 font-sans block mb-1">Preço de $\$6.000$ normalizado:</span>
+                $$y_{norm} = \frac{6.000 - 3.650}{4.640} = \frac{2.350}{4.640} = \mathbf{0.50646}$$
+              </div>
+            </div>
+          </div>
+
+          <!-- SIMULADOR INTERATIVO -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 pt-4">
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider">Simulador Interativo de Normalização:</h5>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+              <div class="md:col-span-4">
+                <input type="number" id="realKmInput" value="100000" min="20000" max="250000" step="5000" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-white font-mono text-xs focus:outline-none focus:border-indigo-500">
+              </div>
+              <div class="md:col-span-8 flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-400">Valor Bruto: <strong id="rawKmDisplay" class="text-white">100.000 km</strong></span>
+                <span class="text-slate-400">Normalizado: <strong id="normKmDisplay" class="text-emerald-400">0.35513</strong></span>
+              </div>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div id="normKmBar" class="bg-emerald-500 h-full w-[35.5%] transition-all"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 03: FUNÇÃO DE CUSTO J(θ) & DERIVADAS DO GRADIENTE COM CADEIA -->
+    <!-- ==================================================================== -->
+    <section id="modulo-3" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-purple-500/20 text-purple-300 text-xs font-bold uppercase tracking-wider">Módulo 03</span>
+          <span class="text-xs text-slate-500">Cálculo Diferencial</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">A Função de Custo $J(\theta)$ & As Derivadas do Gradiente Descendente</h3>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- BLOCO 1: O QUE É PEDIDO -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <h4 class="text-sm font-bold text-purple-400 uppercase tracking-wide flex items-center gap-2">
+            <span>🎯</span> 1. O que é Pedido
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Precisamos de uma métrica matemática que quantifique com exatidão o quanto a nossa reta está errando e, através das derivadas parciais do Cálculo 1, descobrir para qual lado devemos girar e transladar a reta para reduzir esse erro até o mínimo global.
+          </p>
+        </div>
+
+        <!-- BLOCO 2: A FUNÇÃO DE CUSTO -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-2">
+            <span>📐</span> 2. Base Matemática: A Função de Custo $J(\theta_0, \theta_1)$
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            O erro individual de cada carro é $e^{(i)} = \hat{y}^{(i)} - y^{(i)}$. Elevamos ao quadrado $(e^{(i)})^2$ para que erros positivos e negativos não se anulem e multiplicamos pelo fator de simplificação $\frac{1}{2}$:
+          </p>
+          <div class="bg-slate-950 p-4 rounded-xl border border-indigo-500/30 text-center font-mono text-xs">
+            $$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^m \left( \hat{y}^{(i)} - y^{(i)} \right)^2 = \frac{1}{2m} \sum_{i=1}^m \left( \theta_0 + \theta_1 x^{(i)} - y^{(i)} \right)^2$$
+          </div>
+        </div>
+
+        <!-- BLOCO 3: O MÉTODO DA REGRA DA CADEIA (CHAIN RULE EXPLAINED) -->
+        <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-6 space-y-4 shadow-lg shadow-purple-950/30">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-purple-300 uppercase tracking-wide flex items-center gap-2">
+              <span>🔗</span> 3. O Método da Regra da Cadeia (Cálculo Diferencial Passo a Passo)
+            </h4>
+            <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-mono border border-purple-500/30">Fundamento de Cálculo 1</span>
+          </div>
+
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Em matemática básica, sabemos que a derivada de $x^2$ em relação a $x$ é simplesmente $2x$.
+            Porém, na nossa Função de Custo, o que está elevado ao quadrado não é uma única letra, mas uma <strong>expressão inteira (uma função dentro de outra função)</strong>:
+          </p>
+
+          <!-- ANALOGIA DA BONECA RUSSA -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+              <span class="text-indigo-300 font-bold flex items-center gap-1.5">
+                <span>🪆</span> A Analogia da Boneca Russa (Função Composta):
+              </span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Temos uma <strong>"Casca de Fora"</strong> que é o quadrado $(\dots)^2$ e um <strong>"Recheio de Dentro"</strong> que é a expressão do erro $(\theta_0 + \theta_1 x - y)$.
+              </p>
+              <div class="p-2.5 bg-indigo-950/30 rounded-lg border border-indigo-500/20 text-indigo-200 text-center font-bold">
+                "Derive a casca de fora $\times$ multiplique pela derivada do recheio de dentro"
+              </div>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 font-mono">
+              <span class="text-purple-300 font-bold font-sans flex items-center gap-1.5 text-xs">
+                <span>📐</span> A Fórmula Geral da Regra da Cadeia:
+              </span>
+              <div class="text-center py-2 text-sm text-purple-200">
+                $$\frac{d}{d\theta} [ f(u) ] = \underbrace{\frac{df}{du}}_{\text{Derivada de Fora}} \cdot \underbrace{\frac{du}{d\theta}}_{\text{Derivada de Dentro}}$$
+              </div>
+              <p class="text-slate-400 font-sans text-[11px]">
+                Onde $u = (\theta_0 + \theta_1 x - y)$ e $f(u) = u^2$.
+              </p>
+            </div>
+          </div>
+
+          <!-- TABELA DE MAPEAMENTO DAS DERIVADAS INTERNAS -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 text-xs">
+            <span class="text-white font-bold block">Tabela de Mapeamento: Derivando Fora e Dentro</span>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left font-mono text-xs border-collapse">
+                <thead class="bg-slate-900 text-slate-400 text-[11px]">
+                  <tr>
+                    <th class="p-2.5 border border-slate-800">Parâmetro Alvo</th>
+                    <th class="p-2.5 border border-slate-800">1. Derivada de Fora ($\frac{df}{du}$)</th>
+                    <th class="p-2.5 border border-slate-800">2. Derivada de Dentro ($\frac{du}{d\theta}$)</th>
+                    <th class="p-2.5 border border-slate-800 text-emerald-400">3. Resultado Final ($\text{Fora} \times \text{Dentro}$)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 text-slate-300">
+                  <tr>
+                    <td class="p-2.5 border border-slate-800 font-bold text-indigo-400">$\theta_0$ (Intercepto)</td>
+                    <td class="p-2.5 border border-slate-800">$2u = 2(\hat{y} - y)$</td>
+                    <td class="p-2.5 border border-slate-800">$\frac{\partial}{\partial \theta_0}(\theta_0 + \theta_1 x - y) = \mathbf{1}$</td>
+                    <td class="p-2.5 border border-slate-800 font-bold text-emerald-300">$2 \cdot (\hat{y} - y) \cdot 1$</td>
+                  </tr>
+                  <tr>
+                    <td class="p-2.5 border border-slate-800 font-bold text-purple-400">$\theta_1$ (Inclinação)</td>
+                    <td class="p-2.5 border border-slate-800">$2u = 2(\hat{y} - y)$</td>
+                    <td class="p-2.5 border border-slate-800">$\frac{\partial}{\partial \theta_1}(\theta_0 + \theta_1 x - y) = \mathbf{x}$</td>
+                    <td class="p-2.5 border border-slate-800 font-bold text-emerald-300">$2 \cdot (\hat{y} - y) \cdot \mathbf{x}$</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 4: APLICAÇÃO PRÁTICA DA REGRA DA CADEIA NO SOMATÓRIO -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
+            <span>📐</span> 4. Aplicação Prática da Regra da Cadeia em $\frac{\partial J}{\partial \theta_0}$ e $\frac{\partial J}{\partial \theta_1}$
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-mono">
+            <!-- DERIVADA THETA 0 -->
+            <div class="bg-slate-950 p-5 rounded-xl border border-indigo-500/30 space-y-3">
+              <span class="text-indigo-300 font-bold font-sans text-sm block">Derivada Final em Relação a $\theta_0$:</span>
+              <p class="text-slate-400 font-sans">Passo A — Aplicar a regra da cadeia no somatório:</p>
+              $$\frac{\partial J}{\partial \theta_0} = \frac{1}{2m} \sum_{i=1}^m \underbrace{2 \cdot (\hat{y}^{(i)} - y^{(i)})}_{\text{Derivada de Fora}} \cdot \underbrace{1}_{\text{Derivada de Dentro}}$$
+              <p class="text-slate-400 font-sans">Passo B — O $2$ do numerador corta perfeitamente com o $2$ de $\frac{1}{2m}$:</p>
+              <div class="p-3 bg-indigo-950/50 rounded-lg border border-indigo-500/40 text-center font-bold text-indigo-200">
+                $$\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^m \left( \hat{y}^{(i)} - y^{(i)} \right)$$
+              </div>
+            </div>
+
+            <!-- DERIVADA THETA 1 -->
+            <div class="bg-slate-950 p-5 rounded-xl border border-purple-500/30 space-y-3">
+              <span class="text-purple-300 font-bold font-sans text-sm block">Derivada Final em Relação a $\theta_1$:</span>
+              <p class="text-slate-400 font-sans">Passo A — Aplicar a regra da cadeia no somatório:</p>
+              $$\frac{\partial J}{\partial \theta_1} = \frac{1}{2m} \sum_{i=1}^m \underbrace{2 \cdot (\hat{y}^{(i)} - y^{(i)})}_{\text{Derivada de Fora}} \cdot \underbrace{x^{(i)}}_{\text{Derivada de Dentro}}$$
+              <p class="text-slate-400 font-sans">Passo B — O $2$ do numerador corta perfeitamente com o $2$ de $\frac{1}{2m}$:</p>
+              <div class="p-3 bg-purple-950/50 rounded-lg border border-purple-500/40 text-center font-bold text-purple-200">
+                $$\frac{\partial J}{\partial \theta_1} = \frac{1}{m} \sum_{i=1}^m \left( \hat{y}^{(i)} - y^{(i)} \right) \cdot x^{(i)}$$
+              </div>
+            </div>
+          </div>
+
+          <!-- ATUALIZAÇÃO -->
+          <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs text-center space-y-2">
+            <span class="text-slate-400 font-sans text-[11px] block">A Regra de Atualização Simultânea com a Taxa de Aprendizado $\alpha$:</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-3 bg-indigo-950/30 rounded-lg border border-indigo-500/20">
+                $$\theta_0 \leftarrow \theta_0 - \alpha \cdot \left[ \frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)}) \right]$$
+              </div>
+              <div class="p-3 bg-purple-950/30 rounded-lg border border-purple-500/20">
+                $$\theta_1 \leftarrow \theta_1 - \alpha \cdot \left[ \frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)}) \cdot x^{(i)} \right]$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 04: A LOUSA DO PROFESSOR (PASSO A PASSO COM NÚMEROS REAIS) -->
+    <!-- ==================================================================== -->
+    <section id="modulo-4" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-xs font-bold uppercase tracking-wider">Módulo 04</span>
+            <span class="text-xs text-slate-500">Execução Manual</span>
+          </div>
+          <h3 class="text-2xl font-bold text-white mt-1">👨‍🏫 A Lousa do Professor: Destrinchando a Época 1 e 2 na Mão</h3>
+          <p class="text-xs text-slate-400 mt-1">Substituindo cada fórmula por números reais e provando a queda do custo $J(\theta)$.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="switchBoardTab('cenario')" id="tabBtn-cenario" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white transition shadow-lg shadow-emerald-600/30">0. Cenário</button>
+          <button onclick="switchBoardTab('epoca1')" id="tabBtn-epoca1" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">1. Época 1</button>
+          <button onclick="switchBoardTab('epoca2')" id="tabBtn-epoca2" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2. Época 2</button>
+          <button onclick="switchBoardTab('resumo')" id="tabBtn-resumo" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">📊 Tabela de Rastreio</button>
+        </div>
+      </div>
+
+      <!-- CHALKBOARD CONTAINER -->
+      <div class="chalkboard rounded-3xl border-4 border-slate-800 p-8 shadow-2xl space-y-6 relative overflow-hidden text-slate-200">
+
+        <!-- TOP CHALKBOARD BANNER -->
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="chalk-font text-2xl text-emerald-300 tracking-wide">Lousa de Cálculo Numérico #42</span>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Mini-Dataset Normalizado ($m = 2$ carros) | Taxa $\alpha = 0.1$</span>
+        </div>
+
+        <!-- ABA 0: CENÁRIO INICIAL -->
+        <div id="boardTab-cenario" class="space-y-6">
+          <div class="space-y-2">
+            <h4 class="text-lg font-bold text-white flex items-center gap-2">
+              🚗 O Mini-Dataset Normalizado da Nossa Lousa:
+            </h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Para você enxergar todas as contas sem se perder em 24 números gigantescos, selecionamos <strong>2 carros representativos</strong> já normalizados entre $0.0$ e $1.0$:
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+            <div class="bg-slate-900/90 border border-indigo-500/40 rounded-xl p-5 space-y-2">
+              <span class="text-indigo-400 font-bold text-sm">Carro A (Pouco Rodado / Preço Alto):</span>
+              <p class="text-slate-300">Quilometragem Normalizada: <strong class="text-white">$x_1 = 0.2$</strong></p>
+              <p class="text-slate-300">Preço Real Normalizado: <strong class="text-white">$y_1 = 0.8$</strong></p>
+            </div>
+
+            <div class="bg-slate-900/90 border border-purple-500/40 rounded-xl p-5 space-y-2">
+              <span class="text-purple-400 font-bold text-sm">Carro B (Muito Rodado / Preço Baixo):</span>
+              <p class="text-slate-300">Quilometragem Normalizada: <strong class="text-white">$x_2 = 0.8$</strong></p>
+              <p class="text-slate-300">Preço Real Normalizado: <strong class="text-white">$y_2 = 0.2$</strong></p>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/60 border border-slate-700/80 rounded-xl p-5 space-y-2 text-xs">
+            <span class="text-amber-300 font-bold uppercase tracking-wide">Valores Iniciais dos Parâmetros:</span>
+            <p class="text-slate-300">
+              O modelo acorda zerado: <strong class="text-white">$\theta_0^{(0)} = 0.0$</strong> e <strong class="text-white">$\theta_1^{(0)} = 0.0$</strong>. A taxa de aprendizado é <strong class="text-emerald-400">$\alpha = 0.1$</strong>.
+            </p>
+            <p class="text-emerald-300 chalk-font text-xl mt-2">
+              👉 Clique na aba <strong>"1. Época 1"</strong> acima para ver o professor resolver cada conta na lousa!
+            </p>
+          </div>
+        </div>
+
+        <!-- ABA 1: ÉPOCA 1 COMPLETA -->
+        <div id="boardTab-epoca1" class="space-y-6 hidden">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 text-xs font-bold">
+              ÉPOCA 1: Partindo de $\theta_0 = 0.0$ e $\theta_1 = 0.0$
+            </span>
+          </div>
+
+          <!-- 5 ETAPAS DA ÉPOCA 1 -->
+          <div class="space-y-6 text-xs">
+
+            <!-- ETAPA 1 -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-300 font-bold flex items-center justify-center text-xs">1</span>
+                  <span class="font-bold text-white text-sm">Calcular as Predições ($\hat{y}^{(i)} = \theta_0 + \theta_1 x^{(i)}$)</span>
+                </div>
+                <span class="font-mono text-slate-400">Fórmula: $\hat{y} = \theta_0 + \theta_1 \cdot x$</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono space-y-1">
+                <p>Carro A: $\hat{y}_1 = 0.0 + (0.0 \times 0.2) = 0.0 + 0.0 = \mathbf{0.0}$</p>
+                <p>Carro B: $\hat{y}_2 = 0.0 + (0.0 \times 0.8) = 0.0 + 0.0 = \mathbf{0.0}$</p>
+              </div>
+            </div>
+
+            <!-- ETAPA 2: CUSTO J(THETA) INICIAL -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-xs">2</span>
+                  <span class="font-bold text-white text-sm">Calcular o Custo Inicial $J(\theta_0, \theta_1)$ (MSE Inicial)</span>
+                </div>
+                <span class="font-mono text-slate-400">Fórmula: $J(\theta) = \frac{1}{2m} \sum (\hat{y} - y)^2$</span>
+              </div>
+              <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono space-y-2">
+                <p class="text-slate-400">Substituindo $m = 2$ carros e os erros individuais:</p>
+                $$J(0, 0) = \frac{1}{2 \times 2} \left[ (\hat{y}_1 - y_1)^2 + (\hat{y}_2 - y_2)^2 \right]$$
+                $$J(0, 0) = \frac{1}{4} \left[ (0.0 - 0.8)^2 + (0.0 - 0.2)^2 \right]$$
+                $$J(0, 0) = \frac{1}{4} \left[ (-0.8)^2 + (-0.2)^2 \right] = \frac{1}{4} [ 0.64 + 0.04 ] = \frac{0.68}{4} = \mathbf{0.1700}$$
+              </div>
+              <p class="text-amber-300 italic text-[11px]">O placar de erro inicial do modelo é de $J = 0.1700$. Vamos ver quanto ele diminui após a atualização!</p>
+            </div>
+
+            <!-- ETAPA 3: GRADIENTES -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">3</span>
+                <span class="font-bold text-white text-sm">Calcular as Derivadas do Gradiente ($\text{grad}_0$ e $\text{grad}_1$)</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- GRAD 0 -->
+                <div class="bg-slate-950 p-4 rounded-lg border border-indigo-500/30 space-y-2">
+                  <span class="text-indigo-300 font-bold font-mono">Fórmula de $\text{grad}_0 = \frac{1}{m}\sum (\hat{y} - y)$:</span>
+                  <p class="font-mono text-slate-200">
+                    $\text{grad}_0 = \frac{1}{2} [ (0.0 - 0.8) + (0.0 - 0.2) ]$<br>
+                    $\text{grad}_0 = \frac{1}{2} [ (-0.80) + (-0.20) ]$<br>
+                    $\text{grad}_0 = \frac{-1.00}{2} = \mathbf{-0.50}$
+                  </p>
+                </div>
+
+                <!-- GRAD 1 -->
+                <div class="bg-slate-950 p-4 rounded-lg border border-purple-500/30 space-y-2">
+                  <span class="text-purple-300 font-bold font-mono">Fórmula de $\text{grad}_1 = \frac{1}{m}\sum (\hat{y} - y) \cdot x$:</span>
+                  <p class="font-mono text-slate-200">
+                    $\text{grad}_1 = \frac{1}{2} [ (0.0 - 0.8) \cdot 0.2 + (0.0 - 0.2) \cdot 0.8 ]$<br>
+                    $\text{grad}_1 = \frac{1}{2} [ (-0.80 \times 0.2) + (-0.20 \times 0.8) ]$<br>
+                    $\text{grad}_1 = \frac{1}{2} [ -0.16 + -0.16 ] = \frac{-0.32}{2} = \mathbf{-0.16}$
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ETAPA 4: ATUALIZAÇÃO -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-emerald-500/20 text-emerald-300 font-bold flex items-center justify-center text-xs">4</span>
+                <span class="font-bold text-white text-sm">Atualizar os Pesos ($\theta \leftarrow \theta - \alpha \cdot \text{grad}$) com $\alpha = 0.1$</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-950 p-3.5 rounded-lg border border-emerald-500/30 font-mono">
+                  <span class="text-indigo-400 font-bold">Atualização de $\theta_0$:</span>
+                  <p class="text-slate-200 mt-1">
+                    $\theta_0^{(1)} = \theta_0^{(0)} - \alpha \cdot \text{grad}_0$<br>
+                    $\theta_0^{(1)} = 0.0 - 0.1 \times (-0.50)$<br>
+                    $\theta_0^{(1)} = 0.0 + 0.050 = \mathbf{0.050}$
+                  </p>
+                </div>
+
+                <div class="bg-slate-950 p-3.5 rounded-lg border border-emerald-500/30 font-mono">
+                  <span class="text-purple-400 font-bold">Atualização de $\theta_1$:</span>
+                  <p class="text-slate-200 mt-1">
+                    $\theta_1^{(1)} = \theta_1^{(0)} - \alpha \cdot \text{grad}_1$<br>
+                    $\theta_1^{(1)} = 0.0 - 0.1 \times (-0.16)$<br>
+                    $\theta_1^{(1)} = 0.0 + 0.016 = \mathbf{0.016}$
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ETAPA 5: NOVO CUSTO APÓS EPOCA 1 -->
+            <div class="bg-emerald-950/30 border border-emerald-500/40 rounded-xl p-5 space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-emerald-500/20 text-emerald-300 font-bold flex items-center justify-center text-xs">5</span>
+                <span class="font-bold text-white text-sm">Resultado: O Custo $J(\theta)$ após a Época 1</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono space-y-1">
+                $$J(0.050, 0.016) = \frac{1}{4} \left[ (0.0532 - 0.8)^2 + (0.0628 - 0.2)^2 \right] = \frac{1}{4} [ 0.5577 + 0.0188 ] = \mathbf{0.1441}$$
+              </div>
+              <p class="text-emerald-300 chalk-font text-lg">
+                👨‍🏫 Prova na lousa: O erro caiu de <strong>0.1700 para 0.1441</strong> (uma redução de <strong>15.2%</strong> em apenas 1 iteração!).
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ABA 2: ÉPOCA 2 COMPLETA -->
+        <div id="boardTab-epoca2" class="space-y-6 hidden">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 text-xs font-bold">
+              ÉPOCA 2: Partindo de $\theta_0 = 0.050$ e $\theta_1 = 0.016$
+            </span>
+          </div>
+
+          <!-- 5 ETAPAS DA ÉPOCA 2 -->
+          <div class="space-y-6 text-xs">
+
+            <!-- ETAPA 1 -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-300 font-bold flex items-center justify-center text-xs">1</span>
+                  <span class="font-bold text-white text-sm">Calcular os Novos Chutes do Modelo</span>
+                </div>
+                <span class="font-mono text-slate-400">Fórmula: $\hat{y} = 0.050 + 0.016 \cdot x$</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono space-y-1">
+                <p>Carro A: $\hat{y}_1 = 0.050 + (0.016 \times 0.2) = 0.050 + 0.0032 = \mathbf{0.0532}$</p>
+                <p>Carro B: $\hat{y}_2 = 0.050 + (0.016 \times 0.8) = 0.050 + 0.0128 = \mathbf{0.0628}$</p>
+              </div>
+            </div>
+
+            <!-- ETAPA 2: NOVOS ERROS -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="w-6 h-6 rounded-md bg-red-500/20 text-red-300 font-bold flex items-center justify-center text-xs">2</span>
+                  <span class="font-bold text-white text-sm">Calcular os Novos Erros Individuais</span>
+                </div>
+                <span class="font-mono text-slate-400">Fórmula: $e^{(i)} = \hat{y}^{(i)} - y^{(i)}$</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono space-y-1">
+                <p>Erro Carro A: $e_1 = 0.0532 - 0.80 = \mathbf{-0.7468}$ (era $-0.80$, <span class="text-emerald-400 font-bold">reduziu 6.6%!</span>)</p>
+                <p>Erro Carro B: $e_2 = 0.0628 - 0.20 = \mathbf{-0.1372}$ (era $-0.20$, <span class="text-emerald-400 font-bold">reduziu 31.4%!</span>)</p>
+              </div>
+            </div>
+
+            <!-- ETAPA 3: NOVOS GRADIENTES -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">3</span>
+                <span class="font-bold text-white text-sm">Calcular os Novos Gradientes</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-950 p-4 rounded-lg border border-indigo-500/30 space-y-2">
+                  <span class="text-indigo-300 font-bold font-mono">Novo $\text{grad}_0 = \frac{1}{2} [ e_1 + e_2 ]$:</span>
+                  <p class="font-mono text-slate-200">
+                    $\text{grad}_0 = \frac{1}{2} [ (-0.7468) + (-0.1372) ]$<br>
+                    $\text{grad}_0 = \frac{-0.8840}{2} = \mathbf{-0.4420}$
+                  </p>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-lg border border-purple-500/30 space-y-2">
+                  <span class="text-purple-300 font-bold font-mono">Novo $\text{grad}_1 = \frac{1}{2} [ e_1 \cdot x_1 + e_2 \cdot x_2 ]$:</span>
+                  <p class="font-mono text-slate-200">
+                    $\text{grad}_1 = \frac{1}{2} [ (-0.7468 \times 0.2) + (-0.1372 \times 0.8) ]$<br>
+                    $\text{grad}_1 = \frac{1}{2} [ -0.14936 - 0.10976 ] = \frac{-0.25912}{2} = \mathbf{-0.12956}$
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ETAPA 4: SEGUNDA ATUALIZAÇÃO -->
+            <div class="bg-slate-900/80 border border-slate-700 rounded-xl p-5 space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-emerald-500/20 text-emerald-300 font-bold flex items-center justify-center text-xs">4</span>
+                <span class="font-bold text-white text-sm">Segunda Atualização dos Pesos ($\alpha = 0.1$)</span>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-950 p-3.5 rounded-lg border border-emerald-500/30 font-mono">
+                  <span class="text-indigo-400 font-bold">Novo $\theta_0^{(2)}$:</span>
+                  <p class="text-slate-200 mt-1">
+                    $\theta_0^{(2)} = 0.050 - 0.1 \times (-0.4420)$<br>
+                    $\theta_0^{(2)} = 0.050 + 0.0442 = \mathbf{0.0942}$
+                  </p>
+                </div>
+
+                <div class="bg-slate-950 p-3.5 rounded-lg border border-emerald-500/30 font-mono">
+                  <span class="text-purple-400 font-bold">Novo $\theta_1^{(2)}$:</span>
+                  <p class="text-slate-200 mt-1">
+                    $\theta_1^{(2)} = 0.016 - 0.1 \times (-0.12956)$<br>
+                    $\theta_1^{(2)} = 0.016 + 0.01295 = \mathbf{0.02895}$
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ETAPA 5: CUSTO APÓS EPOCA 2 -->
+            <div class="bg-purple-950/30 border border-purple-500/40 rounded-xl p-5 space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">5</span>
+                <span class="font-bold text-white text-sm">Resultado: O Custo $J(\theta)$ após a Época 2</span>
+              </div>
+              <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono space-y-1">
+                $$J(0.0942, 0.02895) = \mathbf{0.1235}$$
+              </div>
+              <p class="text-purple-300 chalk-font text-lg">
+                👨‍🏫 Conclusão do Professor: O custo $J(\theta)$ caiu de <strong>0.1700 ➔ 0.1441 ➔ 0.1235</strong>. O modelo está aprendendo a cada iteração de forma matematicamente previsível e convergente!
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ABA 3: TABELA DE RASTREIO DAS ÉPOCAS -->
+        <div id="boardTab-resumo" class="space-y-6 hidden">
+          <div class="space-y-2">
+            <h4 class="text-lg font-bold text-white flex items-center gap-2">
+              📊 Tabela de Rastreamento Passo a Passo (Trace Table)
+            </h4>
+            <p class="text-xs text-slate-300">
+              Observe a evolução exata de cada variável a cada ciclo do loop <code class="text-indigo-400 font-mono">for epoch in range(epochs):</code>:
+            </p>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs font-mono text-left border-collapse border border-slate-700 bg-slate-950 rounded-xl overflow-hidden">
+              <thead class="bg-slate-900 text-slate-300 uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th class="p-3 border border-slate-800">Época</th>
+                  <th class="p-3 border border-slate-800">$\theta_0$</th>
+                  <th class="p-3 border border-slate-800">$\theta_1$</th>
+                  <th class="p-3 border border-slate-800">$\hat{y}_1$ (Carro A)</th>
+                  <th class="p-3 border border-slate-800">$\hat{y}_2$ (Carro B)</th>
+                  <th class="p-3 border border-slate-800">$\text{grad}_0$</th>
+                  <th class="p-3 border border-slate-800">$\text{grad}_1$</th>
+                  <th class="p-3 border border-slate-800 text-amber-400">Custo $J(\theta)$</th>
+                  <th class="p-3 border border-slate-800 text-emerald-400">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-200">
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-3 border border-slate-800 font-bold">0 (Início)</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800">-0.5000</td>
+                  <td class="p-3 border border-slate-800">-0.1600</td>
+                  <td class="p-3 border border-slate-800 font-bold text-amber-300">0.1700</td>
+                  <td class="p-3 border border-slate-800 text-slate-400">Inicializado</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 bg-indigo-950/20">
+                  <td class="p-3 border border-slate-800 font-bold text-indigo-300">1</td>
+                  <td class="p-3 border border-slate-800 text-indigo-300">0.0500</td>
+                  <td class="p-3 border border-slate-800 text-indigo-300">0.0160</td>
+                  <td class="p-3 border border-slate-800">0.0532</td>
+                  <td class="p-3 border border-slate-800">0.0628</td>
+                  <td class="p-3 border border-slate-800">-0.4420</td>
+                  <td class="p-3 border border-slate-800">-0.1296</td>
+                  <td class="p-3 border border-slate-800 font-bold text-amber-300">0.1441</td>
+                  <td class="p-3 border border-slate-800 text-emerald-400">Queda de 15.2% no erro</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 bg-purple-950/20">
+                  <td class="p-3 border border-slate-800 font-bold text-purple-300">2</td>
+                  <td class="p-3 border border-slate-800 text-purple-300">0.0942</td>
+                  <td class="p-3 border border-slate-800 text-purple-300">0.0289</td>
+                  <td class="p-3 border border-slate-800">0.1000</td>
+                  <td class="p-3 border border-slate-800">0.1173</td>
+                  <td class="p-3 border border-slate-800">-0.3913</td>
+                  <td class="p-3 border border-slate-800">-0.1062</td>
+                  <td class="p-3 border border-slate-800 font-bold text-amber-300">0.1235</td>
+                  <td class="p-3 border border-slate-800 text-emerald-400">Queda contínua</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-3 border border-slate-800 font-bold text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">...</td>
+                  <td class="p-3 border border-slate-800 text-slate-500">Otimização contínua</td>
+                </tr>
+                <tr class="hover:bg-slate-900/50 bg-emerald-950/30">
+                  <td class="p-3 border border-slate-800 font-bold text-emerald-300">1000 (Convergido)</td>
+                  <td class="p-3 border border-slate-800 font-bold text-emerald-300">0.8520</td>
+                  <td class="p-3 border border-slate-800 font-bold text-emerald-300">-0.9150</td>
+                  <td class="p-3 border border-slate-800">0.6690</td>
+                  <td class="p-3 border border-slate-800">0.1200</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800">0.0000</td>
+                  <td class="p-3 border border-slate-800 font-bold text-emerald-300">0.0028</td>
+                  <td class="p-3 border border-slate-800 text-emerald-400 font-bold">✔ Mínimo Global Atingido!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 05: LABORATÓRIO INTERATIVO LIVE GD -->
+    <!-- ==================================================================== -->
+    <section id="modulo-5" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-pink-500/20 text-pink-300 text-xs font-bold uppercase tracking-wider">Módulo 05</span>
+          <span class="text-xs text-slate-500">Simulação Interativa</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">Laboratório Interativo: Ajuste de Reta & Gradiente Descendente ao Vivo</h3>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- CANVAS COM REGRESSÃO INTERATIVA -->
+        <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-white">Plano Cartesiano de Otimização</h4>
+              <p class="text-xs text-slate-400">Linhas tracejadas vermelhas = resíduos verticais $(\hat{y} - y)$ de cada carro</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btnPlayGD" class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/30 transition flex items-center gap-1.5">
+                ▶ Treinar Modelo (Live GD)
+              </button>
+              <button id="btnReset" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition">
+                Resetar
+              </button>
+            </div>
+          </div>
+
+          <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800/80">
+            <canvas id="interactiveCanvas" width="700" height="380" class="w-full h-auto block"></canvas>
+          </div>
+
+          <!-- STATUS BAR -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+            <div>
+              <span class="text-xs text-slate-500">$\theta_0$ (Intercepto Norm)</span>
+              <p id="theta0Display" class="font-mono text-base font-bold text-indigo-400">0.0000</p>
+            </div>
+            <div>
+              <span class="text-xs text-slate-500">$\theta_1$ (Inclinação Norm)</span>
+              <p id="theta1Display" class="font-mono text-base font-bold text-purple-400">0.0000</p>
+            </div>
+            <div>
+              <span class="text-xs text-slate-500">Custo $J(\theta)$ (MSE)</span>
+              <p id="costDisplay" class="font-mono text-base font-bold text-amber-400">0.2845</p>
+            </div>
+            <div>
+              <span class="text-xs text-slate-500">Época Atual</span>
+              <p id="epochDisplay" class="font-mono text-base font-bold text-emerald-400">0 / 1000</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTROLES -->
+        <div class="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+          <h4 class="text-sm font-bold text-white border-b border-slate-800 pb-3">Controles de Hiperparâmetros</h4>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-slate-300">Taxa de Aprendizado ($\alpha$):</span>
+                <span id="lrValDisplay" class="font-mono text-indigo-400 font-bold">0.10</span>
+              </div>
+              <input type="range" id="lrSlider" min="0.01" max="1.0" step="0.01" value="0.10" class="w-full accent-indigo-500">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-slate-300">Total de Épocas ($N$ iterações):</span>
+                <span id="epochsValDisplay" class="font-mono text-indigo-400 font-bold">1000</span>
+              </div>
+              <input type="range" id="epochsSlider" min="100" max="3000" step="100" value="1000" class="w-full accent-indigo-500">
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 space-y-3">
+              <h5 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Ajuste Manual dos Pesos:</h5>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400">Mover $\theta_0$:</span>
+                  <span id="manualT0" class="font-mono text-slate-300">0.00</span>
+                </div>
+                <input type="range" id="manualT0Slider" min="-1.0" max="2.0" step="0.02" value="0.0" class="w-full accent-purple-500">
+              </div>
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-slate-400">Mover $\theta_1$:</span>
+                  <span id="manualT1" class="font-mono text-slate-300">0.00</span>
+                </div>
+                <input type="range" id="manualT1Slider" min="-2.0" max="1.0" step="0.02" value="0.0" class="w-full accent-purple-500">
+              </div>
+            </div>
+
+            <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-400 leading-relaxed">
+              💡 <strong>Experimente:</strong> Mova os sliders manuais e veja o erro $J(\theta)$ aumentar. Em seguida, clique em <strong>"▶ Treinar Modelo"</strong> para ver a inteligência artificial convergir automaticamente!
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 06: A PONTE DA DESNORMALIZAÇÃO (θnorm -> θreal) -->
+    <!-- ==================================================================== -->
+    <section id="modulo-6" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-wider">Módulo 06</span>
+          <span class="text-xs text-slate-500">Recuperação de Parâmetros</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">🌉 A Ponte da Desnormalização: Convertendo $\theta^{norm} \to \theta^{real}$</h3>
+      </div>
+
+      <div class="space-y-6">
+
+        <!-- BLOCO 1: O QUE É PEDIDO -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <h4 class="text-sm font-bold text-teal-400 uppercase tracking-wide flex items-center gap-2">
+            <span>🎯</span> 1. O que é Pedido
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            No espaço normalizado, o treino descobre parâmetros como $\theta_0^{norm} \approx 0.85$ e $\theta_1^{norm} \approx -0.92$.
+            No entanto, o usuário final do programa vai digitar <code class="text-indigo-300">85.000 km</code> e espera receber uma resposta em dólares (<code class="text-emerald-300">$6.388,51</code>).
+            Precisamos deduzir matematicamente as fórmulas que convertem esses pesos normalizados para os pesos reais do mundo físico $(\theta_0^{real}, \theta_1^{real})$.
+          </p>
+        </div>
+
+        <!-- BLOCO 2: DEMONSTRAÇÃO ALGÉBRICA -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-2">
+            <span>📐</span> 2. Base Matemática: A Dedução Analítica Completa
+          </h4>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            Partimos da igualdade da reta no espaço normalizado e substituímos as definições Min-Max:
+          </p>
+
+          <div class="bg-slate-950 p-5 rounded-xl border border-indigo-500/30 space-y-3 font-mono text-xs">
+            <p class="text-slate-400 font-sans">Passo 1 — Substituir $x_{norm}$ e $\hat{y}_{norm}$:</p>
+            $$\frac{\hat{y} - y_{min}}{\Delta y} = \theta_0^{norm} + \theta_1^{norm} \cdot \left( \frac{x - x_{min}}{\Delta x} \right)$$
+
+            <p class="text-slate-400 font-sans">Passo 2 — Multiplicar ambos os lados por $\Delta y$:</p>
+            $$\hat{y} - y_{min} = \Delta y \cdot \theta_0^{norm} + \left( \theta_1^{norm} \cdot \frac{\Delta y}{\Delta x} \right) \cdot (x - x_{min})$$
+
+            <p class="text-slate-400 font-sans">Passo 3 — Expandir a distributiva $(x - x_{min})$ e somar $y_{min}$:</p>
+            $$\hat{y} = \underbrace{\left[ y_{min} + \theta_0^{norm} \cdot \Delta y - \left( \theta_1^{norm} \cdot \frac{\Delta y}{\Delta x} \right) \cdot x_{min} \right]}_{= \mathbf{\theta_0^{real}}} + \underbrace{\left[ \theta_1^{norm} \cdot \frac{\Delta y}{\Delta x} \right]}_{= \mathbf{\theta_1^{real}}} \cdot x$$
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 font-sans">
+              <div class="p-4 bg-indigo-950/40 rounded-xl border border-indigo-500/40 text-center font-mono">
+                <span class="text-indigo-400 font-bold block mb-1">Inclinação Real ($\theta_1^{real}$):</span>
+                $$\theta_1^{real} = \theta_1^{norm} \cdot \left( \frac{\Delta y}{\Delta x} \right)$$
+              </div>
+              <div class="p-4 bg-purple-950/40 rounded-xl border border-purple-500/40 text-center font-mono">
+                <span class="text-purple-400 font-bold block mb-1">Intercepto Real ($\theta_0^{real}$):</span>
+                $$\theta_0^{real} = y_{min} + \theta_0^{norm} \cdot \Delta y - \theta_1^{real} \cdot x_{min}$$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 3: APLICAÇÃO NUMÉRICA COM OS DADOS FINAIS -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-2">
+            <span>🔢</span> 3. Destrinchando com os Pesos Treinados do Nosso Dataset
+          </h4>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+            <div class="bg-slate-950 p-5 rounded-xl border border-indigo-500/30 space-y-2">
+              <span class="text-indigo-300 font-bold font-sans text-sm block">1. Calculando $\theta_1^{real}$:</span>
+              <p class="text-slate-200">
+                $\theta_1^{real} = -0.9150 \times \left( \frac{4.640}{217.101} \right)$<br>
+                $\theta_1^{real} = -0.9150 \times 0.0213725$<br>
+                $\mathbf{\theta_1^{real} = -0.019556\ \$/\text{km}}$
+              </p>
+              <p class="text-slate-400 font-sans text-[11px] pt-1">
+                👉 O carro desvaloriza exatamente <strong>1.95 centavos</strong> por km rodado.
+              </p>
+            </div>
+
+            <div class="bg-slate-950 p-5 rounded-xl border border-purple-500/30 space-y-2">
+              <span class="text-purple-300 font-bold font-sans text-sm block">2. Calculando $\theta_0^{real}$:</span>
+              <p class="text-slate-200">
+                $\theta_0^{real} = 3650 + (0.8520 \times 4640) - (-0.019556 \times 22899)$<br>
+                $\theta_0^{real} = 3650 + 3953.28 + 447.81$<br>
+                $\mathbf{\theta_0^{real} = \$8.051,09}$
+              </p>
+              <p class="text-slate-400 font-sans text-[11px] pt-1">
+                👉 O preço teórico do carro zero quilômetro é de <strong>$8.051,09</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wide text-emerald-400">Equação Final no Mundo Real:</span>
+              <p class="font-mono text-xl font-bold text-white mt-1">$$\text{Preço}(km) = 8051.09 - (0.019556 \times km)$$</p>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-400">Previsão para 100.000 km:</span>
+              <p class="font-mono text-xl font-bold text-emerald-400">Preço = $6.095,49</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 07: SEÇÃO BÔNUS (MÉTRICAS R², RMSE, MAE, MSE & CURVA DE LOSS) -->
+    <!-- ==================================================================== -->
+    <section id="modulo-7" class="space-y-8 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 text-xs font-bold uppercase tracking-wider">Módulo 07 — Bônus</span>
+          <span class="text-xs text-slate-500">Avaliação & Métricas Formais</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">⭐ Seção Bônus: Métricas de Precisão ($R^2$, RMSE, MAE, MSE) & Curva de Loss</h3>
+        <p class="text-xs text-slate-400 mt-1">Análise aprofundada: o que cada métrica mede, aplicação numérica com o dataset de 24 carros, o que respondem e quando usá-las.</p>
+      </div>
+
+      <!-- BLOCO 1: O QUE É PEDIDO -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+        <h4 class="text-sm font-bold text-cyan-400 uppercase tracking-wide flex items-center gap-2">
+          <span>🎯</span> 1. O que é Pedido (Requisitos Bônus do Subject 42)
+        </h4>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          No ecossistema de Machine Learning profissional e na avaliação da 42, traçar uma reta não é suficiente. É fundamental auditar a confiabilidade estatística do modelo treinado.
+          Cada métrica responde a uma pergunta de negócio diferente:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs pt-1 font-mono">
+          <div class="p-3 bg-slate-950 rounded-xl border border-cyan-500/20 text-slate-300">
+            <span class="text-cyan-400 font-bold block mb-1">R² (Precisão Relativa)</span>
+            "A reta é melhor do que chutar a média simples dos preços?"
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-emerald-500/20 text-slate-300">
+            <span class="text-emerald-400 font-bold block mb-1">MAE (Erro Médio)</span>
+            "Em média, quantos dólares reais o chute erra para cima ou para baixo?"
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-purple-500/20 text-slate-300">
+            <span class="text-purple-400 font-bold block mb-1">RMSE (Penalidade)</span>
+            "Existem erros desastrosamente grandes nos carros atípicos?"
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-amber-500/20 text-slate-300">
+            <span class="text-amber-400 font-bold block mb-1">MSE (Loss Pura)</span>
+            "Qual é o valor matemático mínimo atingido na bacia de custo?"
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOCO 2: AS 4 MÉTRICAS DESTRINCHADAS UMA A UMA -->
+      <div class="space-y-6">
+        <h4 class="text-sm font-bold text-indigo-400 uppercase tracking-wide flex items-center gap-2">
+          <span>📐</span> 2. As 4 Métricas de Precisão Destrinchadas (Fórmula, Aplicação, Resposta e Trade-offs)
+        </h4>
+
+        <!-- 1. MÉTRICA R² -->
+        <div class="bg-slate-900 border border-cyan-500/30 rounded-2xl p-6 space-y-4 shadow-lg shadow-cyan-950/20">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 font-bold text-sm font-mono">1. Coeficiente de Determinação (R²)</span>
+              <span class="text-xs text-slate-400">Métrica Adimensional $[-\infty, 1.0]$</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-950 px-3 py-1 rounded-full border border-cyan-500/30">Resultado Real: 0.7329 (73.3%)</span>
+          </div>
+
+          <!-- EQUAÇÃO FORMAL -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-center">
+            $$R^2 = 1 - \frac{SS_{res}}{SS_{tot}} = 1 - \frac{\sum_{i=1}^m (y^{(i)} - \hat{y}^{(i)})^2}{\sum_{i=1}^m (y^{(i)} - \bar{y})^2}$$
+            <p class="text-slate-400 font-sans text-[11px] mt-2">
+              Onde $SS_{res}$ é a Soma dos Quadrados dos Resíduos (o erro do nosso modelo), $SS_{tot}$ é a Soma dos Quadrados Totais (o erro do modelo burro que chuta apenas a média $\bar{y}$) e $\bar{y} = \$6.331,83$.
+            </p>
+          </div>
+
+          <!-- APLICAÇÃO NUMÉRICA COM OS 24 CARROS -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono space-y-2">
+            <span class="text-cyan-300 font-bold font-sans block text-xs">🔢 Como é Aplicada no Nosso Dataset:</span>
+            <p class="text-slate-300">
+              1. Calculamos o erro do chute da média: $SS_{tot} = \sum (y^{(i)} - 6331.83)^2 = \mathbf{40.686.066,33}$<br>
+              2. Calculamos o erro da nossa reta treinada: $SS_{res} = \sum (y^{(i)} - \hat{y}^{(i)})^2 = \mathbf{10.865.450,40}$<br>
+              3. Substituição na fórmula: $R^2 = 1 - \left( \frac{10.865.450,40}{40.686.066,33} \right) = 1 - 0.2671 = \mathbf{0.7329}$
+            </p>
+          </div>
+
+          <!-- O QUE RESPONDE & PROS/CONS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-emerald-400 font-bold flex items-center gap-1">✔ O que Responde & Por que Usar:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Responde: <em>"O modelo é $73.3\%$ melhor em explicar o preço do carro do que simplesmente chutar a média de $\$6.331$."</em> É a métrica mais famosa porque é universal, percentual e independe da escala da moeda.
+              </p>
+            </div>
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-rose-400 font-bold flex items-center gap-1">✖ Quando NÃO Usar / Limitações:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Não informa o erro em dólares reais. Além disso, se a relação entre as variáveis for não-linear (ex: curva exponencial), o $R^2$ pode enganar gerando falsas impressões de precisão.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. MÉTRICA MAE -->
+        <div class="bg-slate-900 border border-emerald-500/30 rounded-2xl p-6 space-y-4 shadow-lg shadow-emerald-950/20">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold text-sm font-mono">2. Erro Absoluto Médio (MAE)</span>
+              <span class="text-xs text-slate-400">Escala Real ($\$$ Dólares)</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full border border-emerald-500/30">Resultado Real: $541,20</span>
+          </div>
+
+          <!-- EQUAÇÃO FORMAL -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-center">
+            $$MAE = \frac{1}{m} \sum_{i=1}^m | \hat{y}^{(i)} - y^{(i)} |$$
+            <p class="text-slate-400 font-sans text-[11px] mt-2">
+              Calcula a média aritmética pura do módulo (valor absoluto) das distâncias verticais de todos os carros.
+            </p>
+          </div>
+
+          <!-- APLICAÇÃO NUMÉRICA COM OS 24 CARROS -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono space-y-2">
+            <span class="text-emerald-300 font-bold font-sans block text-xs">🔢 Como é Aplicada no Nosso Dataset:</span>
+            <p class="text-slate-300">
+              1. Somamos as distâncias absolutas de todos os 24 carros: $\sum | \hat{y}^{(i)} - y^{(i)} | = \$12.988,80$<br>
+              2. Dividimos pelo total de $m = 24$ carros: $MAE = \frac{\$12.988,80}{24} = \mathbf{\$541,20}$
+            </p>
+          </div>
+
+          <!-- O QUE RESPONDE & PROS/CONS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-emerald-400 font-bold flex items-center gap-1">✔ O que Responde & Por que Usar:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Responde: <em>"Na média real do dia a dia, o preço previsto erra por cerca de $\$541$."</em> É a métrica mais fácil de explicar para um cliente ou comprador leigo, pois não distorce erros pequenos nem grandes.
+              </p>
+            </div>
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-rose-400 font-bold flex items-center gap-1">✖ Quando NÃO Usar / Limitações:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Não é boa para função de custo do Gradiente Descendente porque a função módulo $|x|$ tem uma "ponta aguda" em zero e sua derivada é descontínua ($\pm 1$). Além disso, ela não avisa se o modelo cometeu um erro colossal em um carro específico.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MÉTRICA RMSE -->
+        <div class="bg-slate-900 border border-purple-500/30 rounded-2xl p-6 space-y-4 shadow-lg shadow-purple-950/20">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-lg bg-purple-500/20 text-purple-300 font-bold text-sm font-mono">3. Raiz do Erro Quadrático Médio (RMSE)</span>
+              <span class="text-xs text-slate-400">Escala Real ($\$$ com Penalização de Outliers)</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-purple-400 bg-purple-950 px-3 py-1 rounded-full border border-purple-500/30">Resultado Real: $672,85</span>
+          </div>
+
+          <!-- EQUAÇÃO FORMAL -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-center">
+            $$RMSE = \sqrt{\frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})^2} = \sqrt{MSE}$$
+            <p class="text-slate-400 font-sans text-[11px] mt-2">
+              Eleva os erros ao quadrado (amplificando erros grandes), tira a média e extrai a raiz quadrada para voltar à unidade de dólares.
+            </p>
+          </div>
+
+          <!-- APLICAÇÃO NUMÉRICA COM OS 24 CARROS -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono space-y-2">
+            <span class="text-purple-300 font-bold font-sans block text-xs">🔢 Como é Aplicada no Nosso Dataset:</span>
+            <p class="text-slate-300">
+              1. Somamos os erros ao quadrado: $SS_{res} = 10.865.450,40$<br>
+              2. Dividimos por $m = 24$: $MSE = \frac{10.865.450,40}{24} = 452.727,10\ \$^2$<br>
+              3. Extraímos a raiz quadrada: $RMSE = \sqrt{452.727,10} = \mathbf{\$672,85}$
+            </p>
+          </div>
+
+          <!-- O QUE RESPONDE & PROS/CONS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-emerald-400 font-bold flex items-center gap-1">✔ O que Responde & Por que Usar:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Responde: <em>"Considerando penalidades severas para erros graves, nosso desvio padrão de predição é de $\$672,85$."</em> Como $RMSE (\$672) > MAE (\$541)$, isso prova que existem alguns carros com pequenas anomalias no preço.
+              </p>
+            </div>
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-rose-400 font-bold flex items-center gap-1">✖ Quando NÃO Usar / Limitações:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Muito sensível a outliers pontuais. Um único carro com preço bizarro na base puxa o RMSE para cima desproporcionalmente, mesmo que o modelo acerte todos os outros perfeitamente.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. MÉTRICA MSE -->
+        <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-6 space-y-4 shadow-lg shadow-amber-950/20">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-bold text-sm font-mono">4. Erro Quadrático Médio (MSE)</span>
+              <span class="text-xs text-slate-400">Escala Quadrática ($\$^2$) — A Função de Otimização</span>
+            </div>
+            <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950 px-3 py-1 rounded-full border border-amber-500/30">Resultado Real: 452.727,10 $²</span>
+          </div>
+
+          <!-- EQUAÇÃO FORMAL -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-center">
+            $$MSE = \frac{1}{m} \sum_{i=1}^m (\hat{y}^{(i)} - y^{(i)})^2 = 2 \cdot J(\theta)$$
+            <p class="text-slate-400 font-sans text-[11px] mt-2">
+              É exatamente o dobro da Função de Custo $J(\theta)$ usada no Módulo 03.
+            </p>
+          </div>
+
+          <!-- APLICAÇÃO NUMÉRICA COM OS 24 CARROS -->
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono space-y-2">
+            <span class="text-amber-300 font-bold font-sans block text-xs">🔢 Como é Aplicada no Nosso Dataset:</span>
+            <p class="text-slate-300">
+              $MSE = \frac{1}{24} \sum_{i=1}^{24} (\hat{y}^{(i)} - y^{(i)})^2 = \frac{10.865.450,40}{24} = \mathbf{452.727,10\ \$^2}$
+            </p>
+          </div>
+
+          <!-- O QUE RESPONDE & PROS/CONS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-emerald-400 font-bold flex items-center gap-1">✔ O que Responde & Por que Usar:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                É a mãe de todas as funções de perda em regressão linear porque é contínua, suave, infinitamente diferenciável e estritamente convexa (garante um único mínimo global sem mínimos locais!).
+              </p>
+            </div>
+            <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <span class="text-rose-400 font-bold flex items-center gap-1">✖ Quando NÃO Usar / Limitações:</span>
+              <p class="text-slate-300 text-[11px] leading-relaxed">
+                Nunca apresente o MSE puro para um avaliador de negócios: a unidade de medida é "dólares ao quadrado" ($\$^2$), o que não tem sentido intuitivo no mundo físico.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BLOCO 3: GRÁFICO DA CURVA DE LOSS INTERATIVO (LEARNING CURVE) -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+              3. Gráfico da Curva de Convergência da Loss $J(\theta)$ (500 Épocas)
+            </h4>
+            <p class="text-xs text-slate-400">Demonstração visual do decaimento assintótico do erro até o mínimo global</p>
+          </div>
+          <span class="text-xs font-mono text-cyan-400 bg-cyan-950/50 px-3 py-1 rounded-lg border border-cyan-500/30">Taxa α = 0.1</span>
+        </div>
+
+        <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800/80">
+          <canvas id="lossCurveCanvas" width="700" height="260" class="w-full h-auto block"></canvas>
+        </div>
+
+        <!-- ANÁLISE DA CURVA -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span class="text-indigo-300 font-bold font-mono">1. Fase Inicial (Épocas 0 - 50):</span>
+            <p class="text-slate-400 text-[11px]">Queda rápida e íngreme do erro. O modelo ajusta a direção macro da inclinação.</p>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span class="text-purple-300 font-bold font-mono">2. Fase Intermediária (50 - 200):</span>
+            <p class="text-slate-400 text-[11px]">Desaceleração do gradiente conforme se aproxima do fundo da bacia parabólica.</p>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span class="text-emerald-300 font-bold font-mono">3. Fase de Platô (200 - 500+):</span>
+            <p class="text-slate-400 text-[11px]">Estabilização assintótica no mínimo global ($J \approx 0.009$). Convergência atingida!</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- MÓDULO 08: GUIA DA DEFESA PRESENCIAL (PEER-DEFENSE 42) -->
+    <!-- ==================================================================== -->
+    <section id="modulo-8" class="space-y-6 scroll-mt-36">
+      <div class="border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-md bg-pink-500/20 text-pink-300 text-xs font-bold uppercase tracking-wider">Módulo 08</span>
+          <span class="text-xs text-slate-500">Avaliação Presencial</span>
+        </div>
+        <h3 class="text-2xl font-bold text-white mt-1">Preparação para a Defesa Presencial (Perguntas & Respostas da 42)</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center gap-2 text-pink-400 font-bold text-sm">
+            <span>❓ Pergunta 1</span>
+          </div>
+          <h5 class="text-white font-semibold text-sm">"Por que você não usou a Equação Normal (OLS Matrix) ao invés do Gradiente Descendente?"</h5>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            <strong>Resposta do Engenheiro:</strong> A Equação Normal $\theta = (X^T X)^{-1} X^T y$ precisa inverter uma matriz, o que tem custo computacional de $O(n^3)$. Para bases com milhões de colunas ou linhas, isso trava a memória. O Gradiente Descendente tem custo linear $O(k \cdot n)$ e é o mesmo algoritmo escalável usado para treinar redes neurais profundas (Deep Learning) e LLMs!
+          </p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center gap-2 text-pink-400 font-bold text-sm">
+            <span>❓ Pergunta 2</span>
+          </div>
+          <h5 class="text-white font-semibold text-sm">"O que acontece se a taxa de aprendizado ($\alpha$) for muito alta ou muito baixa?"</h5>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            <strong>Resposta do Engenheiro:</strong> Se $\alpha$ for muito alto, os passos ultrapassam o ponto mínimo da bacia de erro, fazendo a reta oscilar e divergir para o infinito ($\text{NaN}$). Se $\alpha$ for pequeno demais, o modelo precisa de milhões de épocas para convergir, demorando horas para treinar.
+          </p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center gap-2 text-pink-400 font-bold text-sm">
+            <span>❓ Pergunta 3</span>
+          </div>
+          <h5 class="text-white font-semibold text-sm">"Como você garante que o seu código respeitou a regra de No-Cheating da 42?"</h5>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            <strong>Resposta do Engenheiro:</strong> Construímos um auditor de AST (Árvore Sintática Abstrata) em <code class="text-indigo-400">scripts/norm_check.py</code> que inspeciona o código antes de qualquer commit, bloqueando o uso de <code class="text-pink-400">polyfit</code>, <code class="text-pink-400">sklearn</code> ou métodos embutidos. Nosso algoritmo foi implementado 100% à mão linha por linha.
+          </p>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-3">
+          <div class="flex items-center gap-2 text-pink-400 font-bold text-sm">
+            <span>❓ Pergunta 4</span>
+          </div>
+          <h5 class="text-white font-semibold text-sm">"Qual a interpretação prática do coeficiente $R^2 = 0.733$ neste dataset?"</h5>
+          <p class="text-slate-300 text-xs leading-relaxed">
+            <strong>Resposta do Engenheiro:</strong> Significa que $73.3\%$ de toda a variação no preço dos carros é explicada unicamente pelo desgaste da quilometragem rodada. Os $26.7\%$ restantes dependem de fatores não medidos (ano do veículo, marca, conservação do motor, histórico de batidas).
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC & SIMULATOR ENGINE -->
+  <script>
+    // Tab switching for Chalkboard
+    function switchBoardTab(tabId) {
+      const tabs = ['cenario', 'epoca1', 'epoca2', 'resumo'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`boardTab-${t}`);
+        const btn = document.getElementById(`tabBtn-${t}`);
+        if (t === tabId) {
+          el.classList.remove('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white transition shadow-lg shadow-emerald-600/30';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+        }
+      });
+      if (window.renderMathInElement) {
+        renderMathInElement(document.getElementById(`boardTab-${tabId}`), {
+          delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]
+        });
+      }
+    }
+
+    // 24 Real Data points from dataset/data.csv
+    const RAW_DATA = [
+      { km: 240000, price: 3650 }, { km: 139800, price: 3800 },
+      { km: 150500, price: 4400 }, { km: 185530, price: 4450 },
+      { km: 176000, price: 5250 }, { km: 114800, price: 5350 },
+      { km: 166800, price: 5800 }, { km: 89000, price: 5990 },
+      { km: 144500, price: 5999 }, { km: 84000, price: 6200 },
+      { km: 82029, price: 6390 },  { km: 63060, price: 6390 },
+      { km: 74000, price: 6600 },  { km: 97500, price: 6800 },
+      { km: 67000, price: 6800 },  { km: 76025, price: 6900 },
+      { km: 48235, price: 6900 },  { km: 93000, price: 6990 },
+      { km: 60949, price: 7490 },  { km: 65674, price: 7555 },
+      { km: 54000, price: 7990 },  { km: 68500, price: 7990 },
+      { km: 22899, price: 7990 },  { km: 61789, price: 8290 }
+    ];
+
+    const kmMin = 22899, kmMax = 240000, deltaKm = kmMax - kmMin;
+    const priceMin = 3650, priceMax = 8290, deltaPrice = priceMax - priceMin;
+
+    const NORM_DATA = RAW_DATA.map(d => ({
+      x: (d.km - kmMin) / deltaKm,
+      y: (d.price - priceMin) / deltaPrice
+    }));
+
+    // --- CANVAS 1: DATASET STATIC RENDER ---
+    const dCanvas = document.getElementById('datasetCanvas');
+    const dCtx = dCanvas.getContext('2d');
+
+    function drawDatasetCanvas() {
+      dCtx.clearRect(0, 0, dCanvas.width, dCanvas.height);
+      const pad = 40;
+      const w = dCanvas.width - 2 * pad;
+      const h = dCanvas.height - 2 * pad;
+
+      // Draw Grid & Axes
+      dCtx.strokeStyle = '#334155';
+      dCtx.lineWidth = 1;
+      dCtx.beginPath();
+      dCtx.moveTo(pad, pad);
+      dCtx.lineTo(pad, pad + h);
+      dCtx.lineTo(pad + w, pad + h);
+      dCtx.stroke();
+
+      // Axis Labels
+      dCtx.fillStyle = '#94a3b8';
+      dCtx.font = '10px Inter, sans-serif';
+      dCtx.fillText('20k km', pad, pad + h + 16);
+      dCtx.fillText('240k km', pad + w - 35, pad + h + 16);
+      dCtx.fillText('$8.3k', pad - 32, pad + 10);
+      dCtx.fillText('$3.6k', pad - 32, pad + h);
+
+      // Plot Points
+      NORM_DATA.forEach(pt => {
+        const px = pad + pt.x * w;
+        const py = pad + h - (pt.y * h);
+
+        dCtx.fillStyle = '#818cf8';
+        dCtx.beginPath();
+        dCtx.arc(px, py, 4.5, 0, Math.PI * 2);
+        dCtx.fill();
+        dCtx.strokeStyle = '#c7d2fe';
+        dCtx.lineWidth = 1.5;
+        dCtx.stroke();
+      });
+    }
+    drawDatasetCanvas();
+
+    // --- SCALING SIMULATOR ---
+    const realKmInput = document.getElementById('realKmInput');
+    const rawKmDisplay = document.getElementById('rawKmDisplay');
+    const normKmDisplay = document.getElementById('normKmDisplay');
+    const normKmBar = document.getElementById('normKmBar');
+
+    realKmInput.addEventListener('input', () => {
+      const val = parseFloat(realKmInput.value) || 0;
+      rawKmDisplay.textContent = `${val.toLocaleString('pt-BR')} km`;
+      const norm = Math.max(0, Math.min(1, (val - kmMin) / deltaKm));
+      normKmDisplay.textContent = norm.toFixed(5);
+      normKmBar.style.width = `${(norm * 100).toFixed(1)}%`;
+    });
+
+    // --- CANVAS 2: INTERACTIVE GD SIMULATOR ---
+    const iCanvas = document.getElementById('interactiveCanvas');
+    const iCtx = iCanvas.getContext('2d');
+
+    let currentT0 = 0.0;
+    let currentT1 = 0.0;
+    let currentEpoch = 0;
+    let isTraining = false;
+    let animId = null;
+
+    function computeCost(t0, t1) {
+      let sum = 0;
+      NORM_DATA.forEach(pt => {
+        const yPred = t0 + t1 * pt.x;
+        const err = yPred - pt.y;
+        sum += err * err;
+      });
+      return sum / (2 * NORM_DATA.length);
+    }
+
+    function renderInteractive() {
+      iCtx.clearRect(0, 0, iCanvas.width, iCanvas.height);
+      const pad = 45;
+      const w = iCanvas.width - 2 * pad;
+      const h = iCanvas.height - 2 * pad;
+
+      // Draw Grid
+      iCtx.strokeStyle = '#1e293b';
+      iCtx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const yLine = pad + (h / 4) * i;
+        iCtx.beginPath();
+        iCtx.moveTo(pad, yLine);
+        iCtx.lineTo(pad + w, yLine);
+        iCtx.stroke();
+      }
+
+      // Draw Axes
+      iCtx.strokeStyle = '#475569';
+      iCtx.lineWidth = 1.5;
+      iCtx.beginPath();
+      iCtx.moveTo(pad, pad);
+      iCtx.lineTo(pad, pad + h);
+      iCtx.lineTo(pad + w, pad + h);
+      iCtx.stroke();
+
+      // Axis Labels
+      iCtx.fillStyle = '#94a3b8';
+      iCtx.font = '11px Inter, sans-serif';
+      iCtx.fillText('x_norm (0.0)', pad, pad + h + 18);
+      iCtx.fillText('x_norm (1.0)', pad + w - 45, pad + h + 18);
+      iCtx.fillText('y_norm (1.0)', pad - 40, pad + 10);
+      iCtx.fillText('y_norm (0.0)', pad - 40, pad + h);
+
+      // Draw Error Residuals
+      NORM_DATA.forEach(pt => {
+        const px = pad + pt.x * w;
+        const pyData = pad + h - (pt.y * h);
+        const yPred = currentT0 + currentT1 * pt.x;
+        const pyPred = pad + h - (Math.max(-0.5, Math.min(1.5, yPred)) * h);
+
+        iCtx.setLineDash([2, 3]);
+        iCtx.strokeStyle = '#f43f5e';
+        iCtx.lineWidth = 1;
+        iCtx.beginPath();
+        iCtx.moveTo(px, pyData);
+        iCtx.lineTo(px, pyPred);
+        iCtx.stroke();
+        iCtx.setLineDash([]);
+      });
+
+      // Draw Data Points
+      NORM_DATA.forEach(pt => {
+        const px = pad + pt.x * w;
+        const py = pad + h - (pt.y * h);
+        iCtx.fillStyle = '#6366f1';
+        iCtx.beginPath();
+        iCtx.arc(px, py, 5, 0, Math.PI * 2);
+        iCtx.fill();
+        iCtx.strokeStyle = '#a5b4fc';
+        iCtx.lineWidth = 1.5;
+        iCtx.stroke();
+      });
+
+      // Draw Fitted Line
+      const y0 = currentT0 + currentT1 * 0.0;
+      const y1 = currentT0 + currentT1 * 1.0;
+
+      const p0x = pad;
+      const p0y = pad + h - (y0 * h);
+      const p1x = pad + w;
+      const p1y = pad + h - (y1 * h);
+
+      iCtx.strokeStyle = '#ec4899';
+      iCtx.lineWidth = 3;
+      iCtx.beginPath();
+      iCtx.moveTo(p0x, p0y);
+      iCtx.lineTo(p1x, p1y);
+      iCtx.stroke();
+
+      // Update Displays
+      document.getElementById('theta0Display').textContent = currentT0.toFixed(4);
+      document.getElementById('theta1Display').textContent = currentT1.toFixed(4);
+      document.getElementById('costDisplay').textContent = computeCost(currentT0, currentT1).toFixed(5);
+      document.getElementById('epochDisplay').textContent = `${currentEpoch} / ${document.getElementById('epochsSlider').value}`;
+    }
+
+    renderInteractive();
+
+    // Manual Sliders
+    const manualT0Slider = document.getElementById('manualT0Slider');
+    const manualT1Slider = document.getElementById('manualT1Slider');
+    const lrSlider = document.getElementById('lrSlider');
+    const epochsSlider = document.getElementById('epochsSlider');
+
+    manualT0Slider.addEventListener('input', (e) => {
+      currentT0 = parseFloat(e.target.value);
+      document.getElementById('manualT0').textContent = currentT0.toFixed(2);
+      renderInteractive();
+    });
+
+    manualT1Slider.addEventListener('input', (e) => {
+      currentT1 = parseFloat(e.target.value);
+      document.getElementById('manualT1').textContent = currentT1.toFixed(2);
+      renderInteractive();
+    });
+
+    lrSlider.addEventListener('input', (e) => {
+      document.getElementById('lrValDisplay').textContent = parseFloat(e.target.value).toFixed(2);
+    });
+
+    epochsSlider.addEventListener('input', (e) => {
+      document.getElementById('epochsValDisplay').textContent = e.target.value;
+    });
+
+    // Live Gradient Descent Simulation
+    const btnPlayGD = document.getElementById('btnPlayGD');
+    const btnReset = document.getElementById('btnReset');
+
+    function stepGD(alpha) {
+      const m = NORM_DATA.length;
+      let grad0 = 0;
+      let grad1 = 0;
+
+      NORM_DATA.forEach(pt => {
+        const yPred = currentT0 + currentT1 * pt.x;
+        const err = yPred - pt.y;
+        grad0 += err;
+        grad1 += err * pt.x;
+      });
+
+      currentT0 -= alpha * (grad0 / m);
+      currentT1 -= alpha * (grad1 / m);
+      currentEpoch++;
+    }
+
+    function runTrainingLoop() {
+      const alpha = parseFloat(lrSlider.value);
+      const maxEpochs = parseInt(epochsSlider.value);
+
+      for (let i = 0; i < 5; i++) {
+        if (currentEpoch < maxEpochs) {
+          stepGD(alpha);
+        } else {
+          isTraining = false;
+          btnPlayGD.textContent = '✔ Treinamento Concluído';
+          btnPlayGD.classList.replace('bg-indigo-600', 'bg-emerald-600');
+          cancelAnimationFrame(animId);
+          renderInteractive();
+          return;
+        }
+      }
+
+      renderInteractive();
+      if (isTraining) {
+        animId = requestAnimationFrame(runTrainingLoop);
+      }
+    }
+
+    btnPlayGD.addEventListener('click', () => {
+      if (isTraining) {
+        isTraining = false;
+        btnPlayGD.textContent = '▶ Continuar Treino';
+        cancelAnimationFrame(animId);
+      } else {
+        isTraining = true;
+        btnPlayGD.textContent = '⏸ Pausar Treino';
+        runTrainingLoop();
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      isTraining = false;
+      cancelAnimationFrame(animId);
+      currentT0 = 0.0;
+      currentT1 = 0.0;
+      currentEpoch = 0;
+      manualT0Slider.value = 0.0;
+      manualT1Slider.value = 0.0;
+      document.getElementById('manualT0').textContent = '0.00';
+      document.getElementById('manualT1').textContent = '0.00';
+      btnPlayGD.textContent = '▶ Treinar Modelo (Live GD)';
+      btnPlayGD.classList.replace('bg-emerald-600', 'bg-indigo-600');
+      renderInteractive();
+    });
+
+    // --- CANVAS 3: LOSS CONVERGENCE CURVE (BONUS SECTION) ---
+    const lCanvas = document.getElementById('lossCurveCanvas');
+    const lCtx = lCanvas.getContext('2d');
+
+    function drawLossCurve() {
+      lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
+      const pad = 40;
+      const w = lCanvas.width - 2 * pad;
+      const h = lCanvas.height - 2 * pad;
+
+      // Simulate 1000 epochs loss decay for plot
+      let t0 = 0, t1 = 0;
+      const lossHistory = [];
+      const totalEpochs = 500;
+      for (let ep = 0; ep < totalEpochs; ep++) {
+        let cost = computeCost(t0, t1);
+        lossHistory.push(cost);
+        let g0 = 0, g1 = 0;
+        NORM_DATA.forEach(pt => {
+          let err = (t0 + t1 * pt.x) - pt.y;
+          g0 += err;
+          g1 += err * pt.x;
+        });
+        t0 -= 0.1 * (g0 / NORM_DATA.length);
+        t1 -= 0.1 * (g1 / NORM_DATA.length);
+      }
+
+      // Draw Grid
+      lCtx.strokeStyle = '#1e293b';
+      lCtx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const yLine = pad + (h / 4) * i;
+        lCtx.beginPath();
+        lCtx.moveTo(pad, yLine);
+        lCtx.lineTo(pad + w, yLine);
+        lCtx.stroke();
+      }
+
+      // Draw Axes
+      lCtx.strokeStyle = '#475569';
+      lCtx.lineWidth = 1.5;
+      lCtx.beginPath();
+      lCtx.moveTo(pad, pad);
+      lCtx.lineTo(pad, pad + h);
+      lCtx.lineTo(pad + w, pad + h);
+      lCtx.stroke();
+
+      // Axis Labels
+      lCtx.fillStyle = '#94a3b8';
+      lCtx.font = '10px Inter, sans-serif';
+      lCtx.fillText('Época 0', pad, pad + h + 16);
+      lCtx.fillText('Época 500', pad + w - 45, pad + h + 16);
+      lCtx.fillText('J(θ) = 0.28', pad - 35, pad + 10);
+      lCtx.fillText('J(θ) ≈ 0.009', pad - 35, pad + h);
+
+      // Draw Loss Line
+      const maxLoss = lossHistory[0];
+      const minLoss = lossHistory[lossHistory.length - 1];
+
+      lCtx.strokeStyle = '#06b6d4';
+      lCtx.lineWidth = 2.5;
+      lCtx.beginPath();
+
+      lossHistory.forEach((cost, idx) => {
+        const px = pad + (idx / (lossHistory.length - 1)) * w;
+        const normY = (cost - minLoss) / (maxLoss - minLoss);
+        const py = pad + h - (normY * h);
+
+        if (idx === 0) lCtx.moveTo(px, py);
+        else lCtx.lineTo(px, py);
+      });
+      lCtx.stroke();
+
+      // Highlight Final Point
+      const endX = pad + w;
+      const endY = pad + h;
+      lCtx.fillStyle = '#10b981';
+      lCtx.beginPath();
+      lCtx.arc(endX, endY, 5, 0, Math.PI * 2);
+      lCtx.fill();
+    }
+
+    drawLossCurve();
+  </script>
+</body>
+</html>
