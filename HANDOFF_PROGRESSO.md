@@ -2,9 +2,10 @@
 
 **Projeto:** 42 FT_LINEAR_REGRESSION — Previsão de Preços de Carros via Gradiente Descendente
 **Instituição:** 42 São Paulo / 42 Network Specialization
-**Data do Registro:** Segunda-feira, 31 de Agosto de 2026
+**Data do Registro Inicial:** Segunda-feira, 31 de Agosto de 2026
+**Última Atualização:** Terça-feira, 01 de Setembro de 2026
 **Autor:** Rogerio Silva ([@RogerioLS](https://github.com/RogerioLS))
-**Status Atual:** **Fase 0 Concluída (Governança, CI/CD Hard Quality Gate, AST Anti-Cheating e Scaffolding) — Pronto para Task LR-01**
+**Status Atual:** **Fase 0 Concluída & Masterclass Didática + CI/CD de Deploy 100% Concluídos — Pronto para Task LR-01 e LR-02**
 
 ---
 
@@ -84,6 +85,7 @@ Ft_Linear_Regression-42sp/
 │   └── workflows/
 │       ├── audit.yml                      # CI/CD: Checagem de sintaxe, 42 norm, testes e Hard Quality Gate
 │       ├── branch_lint.yml                # Validador estrito de nomenclatura de branches
+│       ├── deploy-pages.yml               # Deploy automatizado do Interactive Journey no GitHub Pages
 │       └── labeler.yml                    # Auto-labeling de Pull Requests
 ├── .githooks/                             # Hooks Locais do Git
 │   ├── commit-msg                         # Validador dinâmico de Task ID [LR-XX:#NUM] e Commits
@@ -94,7 +96,8 @@ Ft_Linear_Regression-42sp/
 ├── docs/                                  # Documentação técnica e científica
 │   ├── MATHEMATICS.md                     # Derivações matemáticas formais e gradientes
 │   ├── VISUALIZATION_AND_METRICS.md       # Interpretação dos gráficos e métricas de precisão
-│   └── PEER_EVALUATION_GUIDE.md           # Checklist para o dia da defesa presencial
+│   ├── PEER_EVALUATION_GUIDE.md           # Checklist para o dia da defesa presencial
+│   └── interactive_journey.html           # Masterclass didática interativa completa
 ├── notes/
 │   └── README.md                          # Rascunhos e anotações livres da dupla
 ├── scripts/                               # Ferramentas auxiliares e auditoria
@@ -127,7 +130,7 @@ Ft_Linear_Regression-42sp/
 ├── CHANGELOG.md                           # Histórico de versões (Keep a Changelog / SemVer)
 ├── CODE_OF_CONDUCT.md                     # Código de Conduta Contributor Covenant v2.1 em inglês
 ├── CONTRIBUTING.md                        # Guia de contribuição e governança detalhada
-├── HANDOFF_PROGRESSO.md                  # Este documento de referência e continuidade
+├── HANDOFF_PROGRESSO.md                   # Este documento de referência e continuidade
 ├── Makefile                               # Central de controle interativa formatada em ANSI
 ├── pyproject.toml                         # Metadados, empacotamento e dependências Python 3.10+
 ├── README.md                              # Documentação principal com badges e guia rápido
@@ -136,7 +139,7 @@ Ft_Linear_Regression-42sp/
 
 ---
 
-## 🛠️ 3. Inventário Detalhado do que foi Desenvolvido na Fase 0
+## 🛠️ 3. Inventário Detalhado do que foi Desenvolvido na Fase 0 (31/08/2026)
 
 ### 3.1 Automação do Terminal ([Makefile](file:///mnt/c/Users/rogerio.silva/projetos/espec-42/Ft_Linear_Regression-42sp/Makefile))
 * `make help`: Exibe o menu interativo com todos os comandos disponíveis.
@@ -167,16 +170,36 @@ Ft_Linear_Regression-42sp/
 
 ---
 
-## 🚦 4. Estado Atual e Validação
+## 🌟 4. Incremento: Masterclass Didática Interativa & Deploy Web (01/09/2026)
+
+### 4.1 Masterclass Didática Interativa ([docs/interactive_journey.html](file:///mnt/c/Users/rogerio.silva/projetos/espec-42/Ft_Linear_Regression-42sp/docs/interactive_journey.html))
+Desenvolvimento de uma plataforma educacional interativa completa, standalone e cronológica cobrindo 100% dos requisitos fundamentais e bônus do Subject 42:
+* **0. Dicionário de Símbolos**: Nivelamento prévio traduzindo $\theta_0, \theta_1, \hat{y}, e, J(\theta), \alpha$ com analogias do dia a dia.
+* **1. O Problema & Hipótese Linear**: Base real de 24 carros (`dataset/data.csv`), reta $\hat{y} = \theta_0 + \theta_1 x$ e visualização gráfica via Canvas.
+* **2. Normalização Min-Max**: Análise do overflow numérico, dedução da equação $[0.0, 1.0]$, cálculo com $\Delta x = 217.101\text{ km}$ e $\Delta y = \$4.640$, e simulador interativo de normalização.
+* **3. Função de Custo $J(\theta)$ & Derivadas com Regra da Cadeia**: Metáfora da boneca russa (função composta $f(u) = u^2$), fórmula geral $\frac{df}{du} \cdot \frac{du}{d\theta}$, tabela de derivadas de fora e dentro, corte analítico do $\frac{1}{2}$ com o $2$, e regra de atualização simultânea.
+* **4. A Lousa do Professor (Cálculo Numérico Manual)**: Mini-dataset de 2 carros normalizados ($x_1=0.2, y_1=0.8$ e $x_2=0.8, y_2=0.2$) com a resolução manual e passo a passo das **Épocas 1 e 2**, comprovando a queda matemática de $J(\theta)$ ($0.1700 \to 0.1441 \to 0.1235$), acompanhado da Tabela de Rastreio (*Trace Table*).
+* **5. Laboratório Interativo (Live GD Simulator)**: Canvas dinâmico renderizando ao vivo o ajuste da reta, resíduos verticais de cada ponto, sliders de controle para $\alpha$, total de épocas e ajustes manuais.
+* **6. A Ponte da Desnormalização ($\theta^{norm} \to \theta^{real}$)**: Dedução analítica de 4 passos com os dados finais ($\theta_1^{real} = -\$0.019556/\text{km}$, $\theta_0^{real} = \$8.051,09$).
+* **7. Seção Bônus & Métricas de Avaliação**: As 4 métricas formais ($R^2=0.733, MAE=\$541,20, RMSE=\$672,85, MSE=452.727,10$) destrinchadas linha a linha (fórmula, cálculo exato com os 24 carros, o que respondem, prós e contras) e gráfico da **Curva de Loss $J(\theta)$** em 500 épocas.
+* **8. Guia da Defesa Presencial**: As 4 perguntas capitais com respostas fundamentadas para a avaliação entre pares na 42.
+* **Navegação em Grade Multi-Linhas**: Menu superior responsivo em Grid sem barra de rolagem lateral.
+
+### 4.2 CI/CD de Deploy Automatizado ([.github/workflows/deploy-pages.yml](file:///mnt/c/Users/rogerio.silva/projetos/espec-42/Ft_Linear_Regression-42sp/.github/workflows/deploy-pages.yml))
+* Pipeline do GitHub Actions que realiza o deploy automático do `docs/interactive_journey.html` diretamente para o **GitHub Pages** a cada push na `main`, gerando o `index.html` em tempo de build.
+
+---
+
+## 🚦 5. Estado Atual e Validação
 
 * `make compile` ➔ **PASSED (Sintaxe Python 3.10 validada em todos os arquivos)**.
 * `make norm` ➔ **PASSED (14 arquivos auditados, 0 erros, 0 avisos)**.
 * `make check` ➔ **PASSED (Black, Isort, Flake8, Ruff e Detect-Secrets verdes)**.
-* `git status` ➔ **Pronto para iniciar a Task [LR-01]**.
+* `git status` ➔ **Pronto para iniciar as Tasks [LR-01] e [LR-02]**.
 
 ---
 
-## 🚀 5. Roteiro Passo a Passo para as Tasks de Implementação
+## 🚀 6. Roteiro Passo a Passo para as Tasks de Implementação
 
 ### 📋 Mapeamento Sequencial das Tasks:
 
@@ -207,4 +230,4 @@ Ft_Linear_Regression-42sp/
 
 ---
 
-*Documento de handoff criado em 31/08/2026. Ecossistema alinhado em 100% de simetria com o DSLR e pronto para a Task LR-01!* 🏎️🚀
+*Documento de handoff cumulativo atualizado em 01/09/2026. Todo o conteúdo original de 31/08/2026 preservado integralmente, acrescido das entregas do dia 01/09/2026!* 🏎️🚀
