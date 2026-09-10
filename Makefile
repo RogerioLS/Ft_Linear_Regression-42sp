@@ -18,14 +18,15 @@ MAGENTA := \033[35m
 BLUE    := \033[34m
 WHITE   := \033[97m
 
-.PHONY: help install train predict plot precision test norm compile audit summary check pre-commit clean
+.PHONY: help install onboarding train predict plot precision test norm compile audit summary check pre-commit clean
 
 help:
 	@printf "$(CYAN)┌──────────────────────────────────────────────────────────────────────────────┐\n$(RESET)"
 	@printf "$(CYAN)│$(RESET) $(BOLD)$(MAGENTA)                   42 FT_LINEAR_REGRESSION — COMMAND CENTER                 $(RESET) $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)├──────────────────────────────────────────────────────────────────────────────┤\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make help$(RESET)       $(DIM)─$(RESET) Show this interactive help menu                           $(CYAN)│\n$(RESET)"
-	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make install$(RESET)    $(DIM)─$(RESET) Install dependencies in local virtualenv                  $(CYAN)│\n$(RESET)"
+	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make onboarding$(RESET) $(DIM)─$(RESET) Show best practices & Git governance banner               $(CYAN)│\n$(RESET)"
+	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make install$(RESET)    $(DIM)─$(RESET) Install dependencies and configure git hooks               $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make train$(RESET)      $(DIM)─$(RESET) Train Linear Regression model and save thetas.json        $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make predict$(RESET)    $(DIM)─$(RESET) Run interactive price estimation CLI                      $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make plot$(RESET)       $(DIM)─$(RESET) Plot dataset points and fitted regression line (Bonus)    $(CYAN)│\n$(RESET)"
@@ -42,10 +43,14 @@ help:
 	@printf "$(CYAN)│$(RESET)           $(BOLD)$(WHITE)    🔥 Crafted with • by $(YELLOW)@RogerioLS$(WHITE) $(DIM)•$(RESET) $(BOLD)$(CYAN)42 São Paulo 🇧🇷$(RESET)              $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)└──────────────────────────────────────────────────────────────────────────────┘\n$(RESET)"
 
+onboarding:
+	@bash scripts/install-hooks.sh --banner-only
+
 install:
-	@printf "$(BOLD)$(BLUE)📦 [INSTALL] Installing project dependencies...$(RESET)\n"
+	@printf "$(BOLD)$(BLUE)📦 [INSTALL] Installing project dependencies and configuring git hooks...$(RESET)\n"
 	@$(PYTHON) -m pip install -e ".[dev]"
-	@printf "$(GREEN)✔ Dependencies installed successfully!$(RESET)\n"
+	@bash scripts/install-hooks.sh
+	@printf "$(GREEN)✔ Dependencies installed and Git hooks configured successfully!$(RESET)\n"
 
 train:
 	@printf "$(BOLD)$(MAGENTA)🧠 [MODEL] Training Linear Regression via Gradient Descent...$(RESET)\n"
@@ -60,15 +65,15 @@ plot:
 	@$(PYTHON) plot.py $(DATASET)
 
 precision:
-	@printf "$(BOLD)$(BLUE)🎯 [METRICS] Evaluating model precision (R2, MSE, MAE)...$(RESET)\n"
+	@printf "$(BOLD)$(BLUE)🎯 [METRICS] Evaluating model precision metrics (R2, MSE, RMSE, MAE)...$(RESET)\n"
 	@$(PYTHON) scripts/evaluate_metrics.py $(DATASET) $(THETAS)
 
 test:
-	@printf "$(BOLD)$(BLUE)🚀 [TESTS] Running all unit test suites...$(RESET)\n"
+	@printf "$(BOLD)$(BLUE)🧪 [TESTS] Running automated unit test suites...$(RESET)\n"
 	@$(PYTHON) -m unittest discover -s tests -p "test_*.py"
 
 norm:
-	@printf "$(BOLD)$(YELLOW)🛡️ [NORM] Running 42 Norm & AST Anti-Cheating Auditor...$(RESET)\n"
+	@printf "$(BOLD)$(YELLOW)🛡️ [NORM] Running 42 Norm & Anti-Cheating Auditor...$(RESET)\n"
 	@$(PYTHON) scripts/norm_check.py
 
 compile:
@@ -96,8 +101,6 @@ sync-tasks:
 	@$(PYTHON) scripts/sync_tasks.py
 	@printf "$(GREEN)✔ Tasks successfully synchronized!$(RESET)\n"
 
-
-
 pre-commit:
 	@if command -v pre-commit > /dev/null 2>&1; then \
 		printf "$(GREEN)✔ pre-commit is already installed.$(RESET)\n"; \
@@ -105,7 +108,7 @@ pre-commit:
 		printf "$(YELLOW)⏳ Installing pre-commit via pip...$(RESET)\n"; \
 		$(PYTHON) -m pip install pre-commit; \
 	fi
-	@./scripts/install-hooks.sh
+	@bash scripts/install-hooks.sh
 	@printf "$(GREEN)✔ pre-commit setup completed successfully!$(RESET)\n"
 
 clean:
