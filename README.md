@@ -108,7 +108,7 @@
 <table width="100%">
   <tr></tr>
   <tr>
-    <td colspan="4" align="center">
+    <td colspan="3" align="center">
       <h3>📦 42 Deliverables Contract & Executables</h3>
     </td>
   </tr>
