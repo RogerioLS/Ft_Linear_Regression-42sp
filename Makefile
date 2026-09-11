@@ -26,7 +26,7 @@ help:
 	@printf "$(CYAN)├──────────────────────────────────────────────────────────────────────────────┤\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make help$(RESET)       $(DIM)─$(RESET) Show this interactive help menu                           $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make onboarding$(RESET) $(DIM)─$(RESET) Show best practices & Git governance banner               $(CYAN)│\n$(RESET)"
-	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make install$(RESET)    $(DIM)─$(RESET) Install dependencies and configure git hooks               $(CYAN)│\n$(RESET)"
+	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make install$(RESET)    $(DIM)─$(RESET) Install dependencies and configure git hooks              $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make train$(RESET)      $(DIM)─$(RESET) Train Linear Regression model and save thetas.json        $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make predict$(RESET)    $(DIM)─$(RESET) Run interactive price estimation CLI                      $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make plot$(RESET)       $(DIM)─$(RESET) Plot dataset points and fitted regression line (Bonus)    $(CYAN)│\n$(RESET)"
