@@ -37,6 +37,47 @@ class AntiCheatingVisitor(ast.NodeVisitor):
         """
         self.filename = filename
         self.violations: list[str] = []
+        self.local_classes: set[str] = set()
+        self.local_imports: set[str] = set()
+
+    def visit_ClassDef(self, node: ast.ClassDef) -> None:
+        """Registers local class definitions to distinguish from external libraries.
+
+        Args:
+            node (ast.ClassDef): AST class definition node.
+        """
+        self.local_classes.add(node.name)
+        self.generic_visit(node)
+
+    def visit_Import(self, node: ast.Import) -> None:
+        """Flags prohibited machine learning library imports.
+
+        Args:
+            node (ast.Import): AST import node.
+        """
+        banned_modules = ("sklearn", "scipy", "statsmodels")
+        for alias in node.names:
+            if any(alias.name.startswith(banned) for banned in banned_modules):
+                self.violations.append(
+                    f"Line {node.lineno}: Banned library import '{alias.name}' detected!"
+                )
+        self.generic_visit(node)
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
+        """Flags prohibited from-imports and tracks local model imports.
+
+        Args:
+            node (ast.ImportFrom): AST import-from node.
+        """
+        banned_modules = ("sklearn", "scipy", "statsmodels")
+        if node.module and any(node.module.startswith(banned) for banned in banned_modules):
+            self.violations.append(
+                f"Line {node.lineno}: Banned import from '{node.module}' detected!"
+            )
+        if node.module and ("src" in node.module or "model" in node.module):
+            for alias in node.names:
+                self.local_imports.add(alias.asname or alias.name)
+        self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
         """Inspects AST Call nodes for banned function or method names.
@@ -46,13 +87,21 @@ class AntiCheatingVisitor(ast.NodeVisitor):
         """
         if isinstance(node.func, ast.Attribute):
             attr_name = node.func.attr
-            if attr_name in BANNED_METHODS:
+            if (
+                attr_name in BANNED_METHODS
+                and attr_name not in self.local_classes
+                and attr_name not in self.local_imports
+            ):
                 self.violations.append(
                     f"Line {node.lineno}: Banned call '.{attr_name}()' detected!"
                 )
         elif isinstance(node.func, ast.Name):
             func_name = node.func.id
-            if func_name in BANNED_METHODS:
+            if (
+                func_name in BANNED_METHODS
+                and func_name not in self.local_classes
+                and func_name not in self.local_imports
+            ):
                 self.violations.append(
                     f"Line {node.lineno}: Banned function '{func_name}()' detected!"
                 )

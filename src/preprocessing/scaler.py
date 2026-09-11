@@ -35,7 +35,7 @@ class MinMaxScaler:
         Raises:
             ValueError: If input collection is empty.
         """
-        if not data:
+        if len(data) == 0:
             raise ValueError("Cannot fit scaler on empty data collection.")
 
         self.min_val = float(data[0])
