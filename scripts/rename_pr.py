@@ -20,20 +20,29 @@ def main() -> None:
     token = os.getenv("GH_TOKEN") or os.getenv("GITHUB_TOKEN")
     repo = os.getenv("GITHUB_REPOSITORY")
 
-    if not event_path or not token or not repo or not os.path.exists(event_path):
+    if not event_path or not token or not repo:
         print("ℹ️ Skipping PR rename: Not running inside a PR workflow or missing tokens.")
+        return
+
+    if not os.path.exists(event_path):
+        print(f"⚠️ Event file not found: {event_path}")
         return
 
     with open(event_path, "r", encoding="utf-8") as f:
         event_data = json.load(f)
 
-    if "pull_request" not in event_data or not METRICS_PATH.exists():
+    if "pull_request" not in event_data:
+        print("ℹ️ Event is not a pull_request. Skipping rename.")
         return
 
     pr_number = event_data["pull_request"]["number"]
     raw_title = event_data["pull_request"]["title"]
 
     clean_title = raw_title.split(" | ✅ Audit")[0].split(" | ⚠️ Audit")[0].strip()
+
+    if not METRICS_PATH.exists():
+        print(f"⚠️ Audit summary file missing at {METRICS_PATH}")
+        return
 
     with open(METRICS_PATH, "r", encoding="utf-8") as f:
         metrics = json.load(f)
@@ -69,7 +78,9 @@ def main() -> None:
     try:
         with urllib.request.urlopen(req) as resp:
             if resp.status == 200:
-                print(f"✅ PR #{pr_number} title updated successfully to: {new_title}")
+                print(f"✅ PR #{pr_number} title updated successfully:")
+                print(f"   Original: {clean_title}")
+                print(f"   Updated : {new_title}")
             else:
                 print(f"⚠️ Failed to update PR title: HTTP {resp.status}")
     except Exception as e:

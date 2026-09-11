@@ -21,10 +21,10 @@ if echo "$FIRST_LINE" | grep -qE '^(✨|🐛|📝|🔧|♻️|✅|💄|🚀|🔥
 fi
 
 # Extract all Conventional Commit type prefixes in the first line
-mapfile -t TYPE_LIST < <(echo "$FIRST_LINE" | grep -oE '([a-z]+)(\([^)]+\))?:' | sed -E 's/^([a-z]+).*/\1/' | tr '[:upper:]' '[:lower:]' || true)
+TYPE_LIST=$(echo "$FIRST_LINE" | grep -oE '([a-z]+)(\([^)]+\))?:' | sed -E 's/^([a-z]+).*/\1/' | tr '[:upper:]' '[:lower:]' || true)
 
 EMOJIS=""
-for t in "${TYPE_LIST[@]}"; do
+for t in $TYPE_LIST; do
   case "$t" in
     feat) e="✨";;
     fix) e="🐛";;

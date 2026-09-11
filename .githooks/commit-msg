@@ -11,8 +11,8 @@ if [[ "$COMMIT_MSG" =~ ^Merge ]] || [[ "$COMMIT_MSG" =~ ^Revert ]] || [[ "$COMMI
     exit 0
 fi
 
-# Regex: <type>(<scope>): [<TASK-ID>:#<ISSUE_NUM>] <description> or standard conventional commit
-COMMIT_REGEX="^([^:]* )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\/-]+\))?:[[:space:]]+(\[([a-zA-Z0-9_:#-]+)\])?[[:space:]]+(.+)$"
+# Regex: <type>(<scope>): [<TASK-ID>:#<ISSUE_NUM>] <description> or with optional emoji prefix
+COMMIT_REGEX="^([^:]* )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_\/-]+\))?:\s*(\[([a-zA-Z0-9_:#-]+)\])?\s*(.+)$"
 
 if ! [[ "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
     echo ""
@@ -29,7 +29,8 @@ if ! [[ "$COMMIT_MSG" =~ $COMMIT_REGEX ]]; then
     echo "    feat(preprocessing): [LR-01:#1] implement minmax scaler from scratch"
     echo "    feat(model): [LR-02:#2] implement gradient descent optimization"
     echo "    docs(theory): [LR-06:#6] derive gradient and loss functions"
-    echo "    chore(build): [INFRA] configure pre-commit and ast norm checker"
+    echo "    chore(infra): [INFRA] configure pre-commit and ast norm checker"
+    echo "    chore(release): [RELEASE] publish release v0.1.0"
     echo ""
     echo " 💡 Tipos Válidos:"
     echo "    feat, fix, docs, test, refactor, perf, build, ci, chore"
@@ -42,7 +43,7 @@ RAW_TASK_TAG="${BASH_REMATCH[5]}"
 TASK_TAG=$(echo "$RAW_TASK_TAG" | cut -d':' -f1)
 
 # Reserved global tags that don't need a matching file in .github/issues/
-RESERVED_TAGS=("INFRA" "CHORE" "DOCS" "FIX" "HOTFIX" "GLOBAL" "CONFIG" "SECURITY" "COMMUNITY" "DEPS")
+RESERVED_TAGS=("INFRA" "CHORE" "DOCS" "FIX" "HOTFIX" "GLOBAL" "CONFIG" "SECURITY" "COMMUNITY" "DEPS" "RELEASE")
 
 if [ -n "$TASK_TAG" ]; then
     UPPER_TAG=$(echo "$TASK_TAG" | tr '[:lower:]' '[:upper:]')
@@ -80,7 +81,7 @@ if [ -n "$TASK_TAG" ]; then
         echo "    1. Se for uma task do subject, verifique o ID correto (ex: LR-01 a LR-08);"
         echo "    2. Se for uma nova task, crie o arquivo .github/issues/lr-XX-nome.md;"
         echo "    3. Se for uma alteração geral sem task, use uma tag reservada:"
-        echo "       [INFRA], [CHORE], [DOCS], [HOTFIX], [SECURITY], [GLOBAL]"
+        echo "       [INFRA], [CHORE], [DOCS], [HOTFIX], [SECURITY], [GLOBAL], [RELEASE]"
         echo "========================================================================"
         exit 1
     fi
