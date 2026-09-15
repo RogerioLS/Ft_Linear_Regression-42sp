@@ -38,6 +38,7 @@ help:
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make summary$(RESET)    $(DIM)─$(RESET) Generate local audit report (summary.md)                  $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make check$(RESET)      $(DIM)─$(RESET) Pre-commit sanity check across all project files          $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make pre-commit$(RESET) $(DIM)─$(RESET) Install pre-commit tool and set up git hooks              $(CYAN)│\n$(RESET)"
+	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make pr$(RESET)         $(DIM)─$(RESET) Publish automated GitHub Pull Request with Closes #ID     $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)  $(BOLD)$(GREEN)make clean$(RESET)      $(DIM)─$(RESET) Remove temporary cache and prediction files               $(CYAN)│\n$(RESET)"
 	@printf "$(CYAN)├──────────────────────────────────────────────────────────────────────────────┤\n$(RESET)"
 	@printf "$(CYAN)│$(RESET)           $(BOLD)$(WHITE)    🔥 Crafted with • by $(YELLOW)@RogerioLS$(WHITE) $(DIM)•$(RESET) $(BOLD)$(CYAN)42 São Paulo 🇧🇷$(RESET)              $(CYAN)│\n$(RESET)"
@@ -100,6 +101,10 @@ sync-tasks:
 	@printf "$(BOLD)$(CYAN)🔄 [SYNC] Synchronizing GitHub issues to local task files...$(RESET)\n"
 	@$(PYTHON) scripts/sync_tasks.py
 	@printf "$(GREEN)✔ Tasks successfully synchronized!$(RESET)\n"
+
+pr:
+	@printf "$(BOLD)$(CYAN)🚀 [PR] Publishing automated GitHub Pull Request...$(RESET)\n"
+	@$(PYTHON) scripts/create_pr.py
 
 pre-commit:
 	@if command -v pre-commit > /dev/null 2>&1; then \
