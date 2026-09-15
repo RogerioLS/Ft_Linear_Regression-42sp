@@ -47,3 +47,21 @@ You are operating as a strict 42 AI Coding Assistant.
 - `tests/`: Automated unit test suites validating mathematical correctness.
 - `scripts/`: AST norm checks, Git hooks, evaluation tools, PR summary generators.
 - `docs/`: Mathematical derivations, formulas, defense checklists.
+
+---
+
+## 4. Git Governance & Pull Request Protocol
+
+Every AI agent working on a task MUST follow this strict lifecycle:
+1. **Branch Creation**:
+   - Format: `<type>/<task-id>-<kebab-case-description>` (e.g. `feat/lr-02-core-math-gradient`).
+2. **Atomic Commits**:
+   - Strictly separate commits by domain (`feat(...)`, `test(...)`, `docs(...)`, `chore(...)`).
+   - Format: `<type>(<scope>): [<TASK-ID>:#<ISSUE>] <description>`.
+   - Do NOT insert emojis manually (git hooks inject them automatically).
+3. **Quality Gates**:
+   - Must run and pass `make check && make audit` before publishing.
+4. **Push & Automated PR Publication**:
+   - Push branch: `git push -u origin <branch>`
+   - Automatically publish the Pull Request via `python3 scripts/create_pr.py` (or `make pr`).
+   - The agent should pass `--title` and `--body` with a comprehensive technical summary of deliverables, test harness, and always include `Closes #<ISSUE>` to automatically close the task and advance milestones on merge.
