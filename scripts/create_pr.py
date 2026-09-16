@@ -43,13 +43,45 @@ def get_git_output(cmd: List[str]) -> str:
         return ""
 
 
-def get_github_token() -> str:
-    """Retrieves GitHub personal access token from env or git credential helper."""
+def _get_token_from_env() -> str:
+    """Gets token from GITHUB_TOKEN or GH_TOKEN env vars."""
     for env_var in ("GITHUB_TOKEN", "GH_TOKEN"):
         val = os.environ.get(env_var, "").strip()
         if val:
             return val
+    return ""
 
+
+def _get_token_from_gh() -> str:
+    """Gets token via GitHub CLI auth token command."""
+    try:
+        proc = subprocess.run(
+            ["gh", "auth", "token"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        token = proc.stdout.strip()
+        if token and not token.startswith("Failed"):
+            return token
+    except Exception:
+        pass
+    return ""
+
+
+def _get_token_from_file() -> str:
+    """Gets token from ~/.github_token file if present."""
+    token_file = Path.home() / ".github_token"
+    if token_file.exists():
+        try:
+            return token_file.read_text(encoding="utf-8").strip()
+        except Exception:
+            pass
+    return ""
+
+
+def _get_token_from_git() -> str:
+    """Gets token from git credential helper."""
     try:
         proc = subprocess.run(
             ["git", "credential", "fill"],
@@ -64,6 +96,19 @@ def get_github_token() -> str:
     except Exception:
         pass
     return ""
+
+
+def get_github_token(explicit_token: Optional[str] = None) -> str:
+    """Retrieves GitHub personal access token from multiple sources."""
+    if explicit_token:
+        return explicit_token.strip()
+
+    return (
+        _get_token_from_env()
+        or _get_token_from_gh()
+        or _get_token_from_file()
+        or _get_token_from_git()
+    )
 
 
 def get_repository_slug() -> Tuple[str, str]:
@@ -226,16 +271,22 @@ def create_pull_request(
     body: str,
     head: str,
     base: str = "main",
+    token: Optional[str] = None,
     dry_run: bool = False,
 ) -> Optional[str]:
     """Posts a new pull request to GitHub REST API and returns HTML URL."""
     owner, repo = get_repository_slug()
-    token = get_github_token()
+    auth_token = get_github_token(explicit_token=token)
 
-    if not token and not dry_run:
-        raise PermissionError(
-            "GitHub token not found. Please log in with git credential or set GITHUB_TOKEN."
-        )
+    if not auth_token and not dry_run:
+        web_url = f"https://github.com/{owner}/{repo}/pull/new/{head}"
+        print("❌ Token do GitHub não encontrado.")
+        print("\n💡 Como fornecer o token:")
+        print("   1. Autentique via CLI: gh auth login")
+        print("   2. Ou exporte: export GITHUB_TOKEN=ghp_seu_token")
+        print("   3. Ou salve em ~/.github_token")
+        print(f"\n🔗 Link direto do PR:\n   {web_url}")
+        return None
 
     if dry_run:
         print("==================================================")
@@ -261,7 +312,7 @@ def create_pull_request(
         api_url,
         data=json.dumps(payload).encode("utf-8"),
         headers={
-            "Authorization": f"Bearer {token}",
+            "Authorization": f"Bearer {auth_token}",
             "Accept": "application/vnd.github.v3+json",
             "Content-Type": "application/json",
             "User-Agent": "42-ft-linear-regression-bot",
@@ -276,11 +327,16 @@ def create_pull_request(
         err_msg = err.read().decode("utf-8")
         if err.code == 401:
             web_url = f"https://github.com/{owner}/{repo}/pull/new/{head}"
-            print("⚠️ GitHub authentication failed (HTTP 401: Bad credentials).")
-            print(f"🔗 You can create the Pull Request directly at:\n   {web_url}")
+            print("❌ Erro de autenticação no GitHub (HTTP 401: Bad credentials).")
+            print("💡 O token do GitHub armazenado está expirado.")
+            print("\nComo resolver:")
+            print("   1. No terminal, renove com: gh auth login")
+            print("   2. Ou defina a variável: export GITHUB_TOKEN=ghp_seu_token")
+            print("   3. Ou salve seu token em: echo 'ghp_...' > ~/.github_token")
+            print(f"\n🔗 Crie o Pull Request diretamente pelo navegador:\n   {web_url}")
             return None
         if err.code == 422 and "A pull request already exists" in err_msg:
-            existing_url = find_existing_pr_url(owner, repo, head, token)
+            existing_url = find_existing_pr_url(owner, repo, head, auth_token)
             if existing_url:
                 print(f"ℹ️ A Pull Request for '{head}' already exists: {existing_url}")
                 return existing_url
@@ -314,6 +370,7 @@ def main() -> int:
     )
     parser.add_argument("--title", type=str, help="Custom Pull Request title.")
     parser.add_argument("--body", type=str, help="Custom Pull Request markdown body.")
+    parser.add_argument("--token", type=str, help="GitHub Personal Access Token.")
     parser.add_argument(
         "--base", type=str, default="main", help="Target base branch (default: main)."
     )
@@ -340,6 +397,7 @@ def main() -> int:
             body=body,
             head=current_branch,
             base=args.base,
+            token=args.token,
             dry_run=args.dry_run,
         )
 
