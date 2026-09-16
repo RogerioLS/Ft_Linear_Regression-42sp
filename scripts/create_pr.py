@@ -17,6 +17,7 @@ import argparse
 import json
 import os
 import re
+import ssl
 import subprocess
 import sys
 import urllib.error
@@ -198,6 +199,28 @@ def generate_default_pr_content(
     return pr_title, "\n".join(body_lines)
 
 
+def get_ssl_context() -> ssl.SSLContext:
+    """Creates an SSL context with fallback support for system CA certificates."""
+    for ca_file in (
+        "/etc/ssl/certs/ca-certificates.crt",
+        "/etc/pki/tls/certs/ca-bundle.crt",
+    ):
+        if os.path.exists(ca_file):
+            try:
+                return ssl.create_default_context(cafile=ca_file)
+            except Exception:
+                pass
+
+    try:
+        import certifi
+
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        pass
+
+    return ssl.create_default_context()
+
+
 def create_pull_request(
     title: str,
     body: str,
@@ -241,15 +264,21 @@ def create_pull_request(
             "Authorization": f"Bearer {token}",
             "Accept": "application/vnd.github.v3+json",
             "Content-Type": "application/json",
+            "User-Agent": "42-ft-linear-regression-bot",
         },
     )
 
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, context=get_ssl_context()) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             return data.get("html_url")
     except urllib.error.HTTPError as err:
         err_msg = err.read().decode("utf-8")
+        if err.code == 401:
+            web_url = f"https://github.com/{owner}/{repo}/pull/new/{head}"
+            print("⚠️ GitHub authentication failed (HTTP 401: Bad credentials).")
+            print(f"🔗 You can create the Pull Request directly at:\n   {web_url}")
+            return None
         if err.code == 422 and "A pull request already exists" in err_msg:
             existing_url = find_existing_pr_url(owner, repo, head, token)
             if existing_url:
@@ -269,7 +298,7 @@ def find_existing_pr_url(owner: str, repo: str, head: str, token: str) -> Option
         },
     )
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, context=get_ssl_context()) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             if data and isinstance(data, list):
                 return data[0].get("html_url")
