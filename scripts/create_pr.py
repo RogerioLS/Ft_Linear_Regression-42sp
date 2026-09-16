@@ -105,8 +105,8 @@ def get_github_token(explicit_token: Optional[str] = None) -> str:
 
     return (
         _get_token_from_env()
-        or _get_token_from_gh()
         or _get_token_from_file()
+        or _get_token_from_gh()
         or _get_token_from_git()
     )
 
