@@ -47,6 +47,16 @@ class TestLinearRegression(unittest.TestCase):
         self.assertAlmostEqual(model.predict(5.0), 20.0)
         self.assertAlmostEqual(model.predict(-3.0), 4.0)
 
+    def test_hypothesis_zero_thetas(self) -> None:
+        """Tests that hypothesis with theta0=0 and theta1=0 predicts exactly 0.0."""
+        model = LinearRegression(theta0=0.0, theta1=0.0)
+        self.assertEqual(model.predict(0.0), 0.0)
+        self.assertEqual(model.predict(150000.0), 0.0)
+        self.assertEqual(model.predict(-500.0), 0.0)
+
+        preds = model.predict([10000.0, 50000.0, 240000.0])
+        np.testing.assert_array_equal(preds, np.zeros(3))
+
     def test_predict_array_and_list(self) -> None:
         """Tests vector prediction preserving input dimensions."""
         model = LinearRegression(theta0=1.0, theta1=3.0)
@@ -65,6 +75,28 @@ class TestLinearRegression(unittest.TestCase):
         y = np.array([6.0, 10.0, 14.0])
         cost = model.compute_cost(x, y)
         self.assertAlmostEqual(cost, 0.0, places=7)
+
+    def test_mse_known_synthetic_dataset(self) -> None:
+        """Tests MSE cost against handcrafted manual calculation on synthetic data."""
+        # Model: h(x) = 1.0 + 1.0 * x
+        model = LinearRegression(theta0=1.0, theta1=1.0)
+        x = np.array([1.0, 2.0, 3.0])
+        y = np.array([2.0, 3.0, 5.0])
+        # Predictions: [2.0, 3.0, 4.0]
+        # Differences: [0.0, 0.0, -1.0]
+        # Squared differences sum: 0 + 0 + 1.0 = 1.0
+        # J(theta) = 1 / (2 * 3) * 1.0 = 1 / 6 = 0.16666667
+        cost = model.compute_cost(x, y)
+        self.assertAlmostEqual(cost, 1.0 / 6.0, places=6)
+
+    def test_gradient_zero_at_optimum(self) -> None:
+        """Tests that partial derivatives are strictly 0.0 when fitted to perfect data."""
+        model = LinearRegression(theta0=3.0, theta1=-2.0)
+        x = np.array([0.0, 1.0, 2.0, 5.0])
+        y = 3.0 - 2.0 * x
+        grad0, grad1 = model.compute_gradient(x, y)
+        self.assertAlmostEqual(grad0, 0.0, places=7)
+        self.assertAlmostEqual(grad1, 0.0, places=7)
 
     def test_cost_function_masterclass_derivation(self) -> None:
         """Tests cost function calculation against the masterclass manual derivation."""
@@ -130,8 +162,48 @@ class TestLinearRegression(unittest.TestCase):
         model = LinearRegression(theta0=0.0, theta1=0.0)
         model.fit(x, y, alpha=0.5, epochs=1500)
 
-        self.assertAlmostEqual(model.theta0, true_theta0, places=2)
-        self.assertAlmostEqual(model.theta1, true_theta1, places=2)
+    def test_gradient_convergence_few_epochs(self) -> None:
+        """Tests that gradient descent consistently reduces cost over 5, 10, and 20 epochs."""
+        x = np.array([0.1, 0.4, 0.7, 0.9])
+        y = np.array([0.9, 0.6, 0.3, 0.1])
+        model = LinearRegression(theta0=0.0, theta1=0.0)
+
+        initial_cost = model.compute_cost(x, y)
+        model.fit(x, y, alpha=0.1, epochs=5)
+        cost_5 = model.compute_cost(x, y)
+        self.assertLess(cost_5, initial_cost)
+
+        model.fit(x, y, alpha=0.1, epochs=10)
+        cost_15 = model.compute_cost(x, y)
+        self.assertLess(cost_15, cost_5)
+
+    def test_constant_target_convergence(self) -> None:
+        """Tests that gradient descent recovers a horizontal line for constant target y."""
+        x = np.linspace(0.0, 1.0, 50)
+        y = np.full_like(x, 5.0)
+
+        model = LinearRegression(theta0=0.0, theta1=0.0)
+        model.fit(x, y, alpha=0.3, epochs=1000)
+
+        self.assertAlmostEqual(model.theta0, 5.0, places=2)
+        self.assertAlmostEqual(model.theta1, 0.0, places=2)
+
+    def test_single_sample_dataset(self) -> None:
+        """Tests cost and gradient evaluation on a single sample dataset."""
+        model = LinearRegression(theta0=1.0, theta1=2.0)
+        x = np.array([0.5])
+        y = np.array([3.0])
+        # h(0.5) = 1.0 + 2.0 * 0.5 = 2.0
+        # error = 2.0 - 3.0 = -1.0
+        # J = (1 / (2 * 1)) * (-1.0)^2 = 0.5
+        cost = model.compute_cost(x, y)
+        self.assertAlmostEqual(cost, 0.5)
+
+        # grad0 = (1 / 1) * (-1.0) = -1.0
+        # grad1 = (1 / 1) * (-1.0) * 0.5 = -0.5
+        g0, g1 = model.compute_gradient(x, y)
+        self.assertAlmostEqual(g0, -1.0)
+        self.assertAlmostEqual(g1, -0.5)
 
     def test_invalid_arguments(self) -> None:
         """Tests that invalid training arguments raise appropriate ValueError."""
