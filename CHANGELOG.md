@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.1.0] - 2026-09-18 — 01. Mathematical Foundations & Preprocessing
+
+### ✨ Features & Algorithms
+- [LR-03] Test Suite: Validação Unitária do Gradiente e Convergência ([#3](https://github.com/RogerioLS/Ft_Linear_Regression-42sp/issues/3)) by @RogerioLS
+- [LR-02] Core Math: Hipótese, Custo MSE e Derivadas Parciais do Gradiente ([#2](https://github.com/RogerioLS/Ft_Linear_Regression-42sp/issues/2)) by @RogerioLS
+- [LR-01] Data Pipeline: Leitura de CSV e Normalização Min-Max ([#1](https://github.com/RogerioLS/Ft_Linear_Regression-42sp/issues/1)) by @RogerioLS
 ### Added
 - Modular packages scaffolding (`src/preprocessing/`, `src/model/`, `src/visualization/`).
 - Automated AST Norm & Anti-Cheating checker (`scripts/norm_check.py`).
