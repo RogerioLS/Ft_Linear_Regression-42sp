@@ -15,7 +15,7 @@ from typing import Any, Dict, Optional, Tuple, Union
 
 from src.model.linear_regression import LinearRegression
 from src.preprocessing.loader import load_csv
-from src.preprocessing.scaler import MinMaxScaler, denormalize_parameters
+from src.preprocessing.scaler import MinMaxScaler, unscale_thetas
 
 DEFAULT_DATASET = Path("dataset/data.csv")
 DEFAULT_OUTPUT = Path("thetas.json")
@@ -168,9 +168,7 @@ def train_model(
     final_cost = model.compute_cost(x_scaled, y_scaled)
 
     # 4. Analytically convert normalized weights to original physical units
-    theta0_real, theta1_real = denormalize_parameters(
-        model.theta0, model.theta1, x_scaler, y_scaler
-    )
+    theta0_real, theta1_real = unscale_thetas(model.theta0, model.theta1, x_scaler, y_scaler)
 
     # 5. Persist unscaled parameters and training metadata to JSON
     metadata: Dict[str, Any] = {

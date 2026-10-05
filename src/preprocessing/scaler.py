@@ -107,6 +107,26 @@ class MinMaxScaler:
 
         return [float(x_scaled) * self.range_val + self.min_val for x_scaled in scaled_data]
 
+    @staticmethod
+    def unscale_thetas(
+        theta0_norm: float,
+        theta1_norm: float,
+        x_scaler: "MinMaxScaler",
+        y_scaler: "MinMaxScaler",
+    ) -> tuple[float, float]:
+        """Class method to convert normalized thetas to original feature units.
+
+        Args:
+            theta0_norm (float): Learned normalized intercept.
+            theta1_norm (float): Learned normalized slope.
+            x_scaler (MinMaxScaler): Scaler fitted on input features (km).
+            y_scaler (MinMaxScaler): Scaler fitted on target outputs (price).
+
+        Returns:
+            tuple[float, float]: Real-world parameters (theta0, theta1).
+        """
+        return denormalize_parameters(theta0_norm, theta1_norm, x_scaler, y_scaler)
+
 
 def denormalize_parameters(
     theta0_norm: float,
@@ -157,3 +177,27 @@ def denormalize_parameters(
     theta0_real = y_min + (theta0_norm * delta_y) - (theta1_real * x_min)
 
     return theta0_real, theta1_real
+
+
+def unscale_thetas(
+    theta0_norm: float,
+    theta1_norm: float,
+    x_scaler: MinMaxScaler,
+    y_scaler: MinMaxScaler,
+) -> tuple[float, float]:
+    """Analytically converts normalized regression weights to original domain thetas.
+
+    Mathematical Derivation:
+        theta1 = theta1_norm * (Delta_y / Delta_x)
+        theta0 = y_min + theta0_norm * Delta_y - theta1 * x_min
+
+    Args:
+        theta0_norm (float): Intercept parameter learned in normalized space [0, 1].
+        theta1_norm (float): Slope parameter learned in normalized space [0, 1].
+        x_scaler (MinMaxScaler): Scaler fitted on independent variable (km).
+        y_scaler (MinMaxScaler): Scaler fitted on dependent variable (price).
+
+    Returns:
+        tuple[float, float]: Tuple containing (theta0_real, theta1_real).
+    """
+    return denormalize_parameters(theta0_norm, theta1_norm, x_scaler, y_scaler)
