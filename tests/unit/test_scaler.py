@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from src.preprocessing.loader import load_csv
-from src.preprocessing.scaler import MinMaxScaler, denormalize_parameters
+from src.preprocessing.scaler import MinMaxScaler, denormalize_parameters, unscale_thetas
 
 
 class TestMinMaxScaler(unittest.TestCase):
@@ -83,6 +83,39 @@ class TestMinMaxScaler(unittest.TestCase):
             y_pred_real = theta0_real + theta1_real * x_val
 
             self.assertAlmostEqual(y_pred_recovered, y_pred_real, places=7)
+
+    def test_unscale_thetas_equivalence(self) -> None:
+        """Verifies unscale_thetas matches denormalize_parameters output exactly."""
+        km, price = load_csv(self.dataset_path)
+        x_scaler = MinMaxScaler().fit(km)
+        y_scaler = MinMaxScaler().fit(price)
+
+        t0_denorm, t1_denorm = denormalize_parameters(0.25, -0.75, x_scaler, y_scaler)
+        t0_unscale, t1_unscale = unscale_thetas(0.25, -0.75, x_scaler, y_scaler)
+        t0_method, t1_method = MinMaxScaler.unscale_thetas(0.25, -0.75, x_scaler, y_scaler)
+
+        self.assertEqual(t0_denorm, t0_unscale)
+        self.assertEqual(t1_denorm, t1_unscale)
+        self.assertEqual(t0_unscale, t0_method)
+        self.assertEqual(t1_unscale, t1_method)
+
+    def test_unscale_thetas_unfitted_raises(self) -> None:
+        """Verifies unscale_thetas raises RuntimeError when scalers are uncalibrated."""
+        scaler1 = MinMaxScaler()
+        scaler2 = MinMaxScaler().fit([1.0, 2.0, 3.0])
+
+        with self.assertRaises(RuntimeError):
+            unscale_thetas(0.0, 0.0, scaler1, scaler2)
+        with self.assertRaises(RuntimeError):
+            unscale_thetas(0.0, 0.0, scaler2, scaler1)
+
+    def test_unscale_thetas_zero_range_raises(self) -> None:
+        """Verifies unscale_thetas raises ZeroDivisionError when x feature range is 0."""
+        constant_x = MinMaxScaler().fit([100.0, 100.0])
+        valid_y = MinMaxScaler().fit([10.0, 50.0])
+
+        with self.assertRaises(ZeroDivisionError):
+            unscale_thetas(0.1, 0.5, constant_x, valid_y)
 
 
 if __name__ == "__main__":
